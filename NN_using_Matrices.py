@@ -39,5 +39,5 @@ class NeuralNetwork() :
             outputs = layer.feed(input_array)
             all_outputs.append(outputs)
             input_array = outputs
-
-            
+        
+        return outputs

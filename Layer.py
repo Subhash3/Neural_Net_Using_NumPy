@@ -18,11 +18,11 @@ class Layer() :
     def activate(self, x) :
         if self.activation_function == 'sigmoid' :
             return self._sigmoid(x)
-        if self.activation_function == 'tanh' :
+        elif self.activation_function == 'tanh' :
             return self._tanh(x)
-        if self.activation_function == 'relu':
+        elif self.activation_function == 'relu':
             return self._relu(x)
-        if self.activation_function == 'softmax':
+        elif self.activation_function == 'softmax':
             return self._softmax(x)
 
     def _sigmoid(self, x) :

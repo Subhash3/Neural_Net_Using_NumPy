@@ -8,6 +8,8 @@ class NeuralNetwork() :
         self.Network = list()
         self.I = I
         self.O = O
+        self.total_layers = 0
+        self.learningRate = 0.1
     
     def addLayer(self, num_nodes, activation_function="sigmoid") :
         """
@@ -28,8 +30,9 @@ class NeuralNetwork() :
         # No. of columns = No. of weights = No. of inputs + 1 (bias)
         layer = Layer(num_nodes, self.I, activation_function)
         self.Network.append(layer)
+        self.total_layers += 1
 
-    def addOutputLayer(self, activation_function="sigmoid") :
+    def compile(self, activation_function="sigmoid") :
         # Adding output layer
         self.addLayer(self.O, activation_function=activation_function)
     
@@ -37,7 +40,66 @@ class NeuralNetwork() :
         all_outputs = list()
         for layer in self.Network :
             outputs = layer.feed(input_array)
+            layer.outputs = outputs
             all_outputs.append(outputs)
             input_array = outputs
         
-        return outputs
+        return all_outputs
+
+    def backpropagate(self, target) :
+        for i in range(self.total_layers-1, -1, -1) :
+            layer = self.Network[i]
+            if i == self.total_layers -1 :
+                # Output layer
+                output_errors = (target - layer.outputs)**2
+                layer.calculate_gradients(target, layer_type="output")
+            else :
+                next_layer = self.Network[i+1]
+                layer.calculate_gradients(next_layer.weights, next_layer.deltas)
+        return sum(output_errors)
+
+    def update_weights(self, input_array) :
+        for i in range(self.total_layers-1, -1, -1) :
+            layer = self.Network[i]
+            if i == 0 :
+                # if it is the first layer => inputs = input_array
+                layer.update_weights(input_array, self.learningRate)
+            else :
+                # not the first most => inputs = previous layer's output
+                inputs = self.Network[i-1].outputs
+                layer.update_weights(inputs, self.learningRate)
+
+    def Train(self, Dataset, size, epochs=5000, logging=True) :
+        for epoch in range(epochs) :
+            self.MSE = 0
+            for i in range(size) :
+                data_sample = Dataset[i]
+                input_array = data_sample[0]
+                target_array = data_sample[1]
+
+                all_outputs = self.feedforward(input_array)
+                print("Input: ", input_array)
+                self.display()
+                output_error = self.backpropagate(target_array)
+                self.update_weights(input_array)
+                
+                self.MSE += output_error
+                if logging :
+                    # print(input_array, "\x1b[34m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+                    # self.display()
+                    pass
+                    # print("Input: ", input_array)
+                    # print("All outputs: ", all_outputs)
+                    # print("Errors: ", output_error)
+            self.MSE /= size
+            print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)
+            if logging :
+                print()
+
+    def predict(self, input_array) :
+        return self.feedforward(input_array)
+
+    def display(self) :
+        for i in range(self.total_layers) :
+            print("Layer: ", i+1)
+            self.Network[i].display()

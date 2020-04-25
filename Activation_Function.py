@@ -24,10 +24,15 @@ class ActivationFunction() :
         return 1/(1 + np.exp(-x))
 
     def _tanh(self, x, derivative=False) :
-        return 2/(1 + np.exp(-2*x)) -1
+        tan = 2/(1 + np.exp(-2*x)) -1
+        if derivative:
+            return (1-tan**2)
+        return tan
 
     def _relu(self, x, derivative=False) :
+        if derivative:
+            return (x>0).astype(int)
         return np.max(0,x)
 
-    def _softmax(self, x, derivative=False) :
+    def _softmax(self, x) :
         return np.exp(x)/np.sum(np.exp(x))

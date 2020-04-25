@@ -4,10 +4,12 @@ import numpy as np
 from Layer import Layer
 
 class NeuralNetwork() :
-    def __init__(self, I, O) :
+    def __init__(self, I, O,cost='mse') :
         self.Network = list()
         self.I = I
         self.O = O
+        self.cost = cost
+        self.error = 0
         self.total_layers = 0
         self.learningRate = 0.1
     
@@ -37,13 +39,12 @@ class NeuralNetwork() :
         self.addLayer(self.O, activation_function=activation_function)
     
     def feedforward(self, input_array) :
-        all_outputs = list()
+        self.all_outputs = list()
         for layer in self.Network :
             outputs = layer.feed(input_array)
             layer.outputs = outputs
             all_outputs.append(outputs)
             input_array = outputs
-        
         return all_outputs
 
     def backpropagate(self, target) :

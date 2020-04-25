@@ -35,13 +35,14 @@ class Layer() :
         else :
             # print("Hidden Layer")
             # target_or_weights = Next layer's weights
-            self.deltas = np.dot(target_or_weights.transpose(), next_layer_deltas) * activator.activate(self.outputs, derivative=True)
+            hidden_errors = np.dot(target_or_weights.transpose(), next_layer_deltas) # Errors in the hidden layer
+            self.deltas = hidden_errors * activator.activate(self.outputs, derivative=True)
             # deltas += (next_layers weights * next_layers deltas)
     
     def update_weights(self, inputs, learningRate) :
-        change_in_weights = (self.deltas * learningRate) * inputs.transpose()
-        self.weights = self.weights + change_in_weights
-        self.biases += (self.biases * learningRate)
+        change_in_weights = np.dot(self.deltas, inputs.T) * learningRate
+        self.weights = np.add(self.weights, change_in_weights)
+        self.biases += (self.deltas * learningRate)
 
     def display(self) :
         print("\tWeights: ", self.weights)

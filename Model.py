@@ -2,6 +2,7 @@
 
 import numpy as np
 from Layer import Layer
+from matplotlib import pyplot as plt
 
 class NeuralNetwork() :
     def __init__(self, I, O,cost='mse') :
@@ -76,32 +77,51 @@ class NeuralNetwork() :
                 layer.update_weights(inputs, self.learningRate)
 
     def Train(self, Dataset, size, epochs=5000, logging=True) :
+        self.all_errors = list()
+        self.epochs = epochs
         for epoch in range(epochs) :
             self.MSE = 0
             for i in range(size) :
                 data_sample = Dataset[i]
-                input_array = data_sample[0]
-                target_array = data_sample[1]
+                # input_array = data_sample[0]
+                # target_array = data_sample[1]
+                input_array = data_sample.input_array
+                target_array = data_sample.targets
 
                 all_outputs = self.feedforward(input_array)
                 output_error = self.backpropagate(target_array)
                 self.update_weights(input_array)
                 
                 self.MSE += output_error
-                if logging :
-                    print(input_array.transpose(), "\x1b[34m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
-                    # self.display()
-                    # print("Input: ", input_array.transpose())
-                    # print("All outputs: ", all_outputs[0].transpose())
-                    # print("Errors: ", output_error)
+                if logging or epoch == epochs-1:
+                    print(input_array.transpose(), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+
             self.MSE /= size
             print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)
+            self.all_errors.append(self.MSE)
             if logging :
                 print()
-
     def predict(self, input_array) :
         return self.feedforward(input_array)
 
+    def epoch_vs_error(self) :
+        all_epochs = [i+1 for i in range(self.epochs)]
+        plt.xlabel("Epoch")
+        plt.ylabel("Error")
+        plt.title("Epoch vs Error")
+        plt.plot(all_epochs, self.all_errors)
+        plt.show()
+
+    def evaluate(self) :
+        self.accuracy =  (1 - np.sqrt(self.MSE))*100
+        print("\t=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        print("\tModel is trained for ", self.epochs, "epochs")
+        print("\tModel Accuracy: ", self.accuracy, "%")
+        if self.accuracy < 70 :
+            print("\t\tModel Doesn't seem to have fit the data correctly")
+            print("\t\tTry increasing the epochs")
+        print("\t=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        
     def display(self) :
         for i in range(self.total_layers) :
             print("Layer: ", i+1)

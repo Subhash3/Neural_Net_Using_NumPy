@@ -11,7 +11,7 @@ class NeuralNetwork() :
         self.cost = cost
         self.error = 0
         self.total_layers = 0
-        self.learningRate = 0.1
+        self.learningRate = 0.5
     
     def addLayer(self, num_nodes, activation_function="sigmoid") :
         """
@@ -56,13 +56,13 @@ class NeuralNetwork() :
             layer = self.Network[i]
             if i == self.total_layers -1 :
                 # print("Output layer: ", layer.outputs, "Target: ", target)
-                output_errors = target - layer.outputs
+                output_errors = (target - layer.outputs)**2
                 # print("Error: ", output_errors)
-                layer.calculate_gradients(output_errors, "output")
+                layer.calculate_gradients(target, "output")
             else :
                 next_layer = self.Network[i+1]
                 layer.calculate_gradients(next_layer.weights, "hidden", next_layer.deltas)
-        return sum(output_errors**2)
+        return sum(output_errors)
 
     def update_weights(self, input_array) :
         for i in range(self.total_layers-1, -1, -1) :

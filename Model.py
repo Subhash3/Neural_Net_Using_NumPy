@@ -39,10 +39,10 @@ class NeuralNetwork() :
         self.addLayer(self.O, activation_function=activation_function)
     
     def feedforward(self, input_array) :
-        self.all_outputs = list()
+        all_outputs = list()
         for layer in self.Network :
             outputs = layer.feed(input_array)
-            layer.outputs = outputs
+            layer.outputs = outputs # Store the output in the layer.
             all_outputs.append(outputs)
             input_array = outputs
         return all_outputs

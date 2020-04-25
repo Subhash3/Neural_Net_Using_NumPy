@@ -12,15 +12,11 @@ class Layer() :
         self.activation_function = activation_function
 
     def feed(self, input_array) :
-<<<<<<< HEAD
         # print("Weights", self.weights.shape)
         # print("Inputs ", input_array.shape)
         dot_product = np.dot(self.weights, input_array)
         dot_product += self.biases
         # print("Output: ", dot_product.shape)
-=======
-        dot_product = np.dot(self.weights, input_array.T) + self.biases
->>>>>>> 403bf66ca3d2c643a6f24c921782b79ed149b4de
         return self.activate(dot_product)
 
     def activate(self, x) :

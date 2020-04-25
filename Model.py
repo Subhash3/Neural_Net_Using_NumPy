@@ -40,24 +40,29 @@ class NeuralNetwork() :
     
     def feedforward(self, input_array) :
         all_outputs = list()
+        i = 1
         for layer in self.Network :
+            # print("Feeding ", input_array.T, "to , layer", i)
             outputs = layer.feed(input_array)
-            layer.outputs = outputs # Store the output in the layer.
-            all_outputs.append(outputs)
+            all_outputs.append(outputs.T)
             input_array = outputs
+            # print("All outputs: ", all_outputs)
+            # print()
+            i += 1
         return all_outputs
 
     def backpropagate(self, target) :
         for i in range(self.total_layers-1, -1, -1) :
             layer = self.Network[i]
             if i == self.total_layers -1 :
-                # Output layer
-                output_errors = (target - layer.outputs)**2
-                layer.calculate_gradients(target, "output")
+                # print("Output layer: ", layer.outputs, "Target: ", target)
+                output_errors = target - layer.outputs
+                # print("Error: ", output_errors)
+                layer.calculate_gradients(output_errors, "output")
             else :
                 next_layer = self.Network[i+1]
                 layer.calculate_gradients(next_layer.weights, "hidden", next_layer.deltas)
-        return sum(output_errors)
+        return sum(output_errors**2)
 
     def update_weights(self, input_array) :
         for i in range(self.total_layers-1, -1, -1) :
@@ -79,14 +84,12 @@ class NeuralNetwork() :
                 target_array = data_sample[1]
 
                 all_outputs = self.feedforward(input_array)
-                # print("Input: ", input_array)
-                # self.display()
                 output_error = self.backpropagate(target_array)
                 self.update_weights(input_array)
                 
                 self.MSE += output_error
                 if logging :
-                    print(input_array.transpose(), "\x1b[34m", all_outputs[0].transpose(), "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+                    print(input_array.transpose(), "\x1b[34m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
                     # self.display()
                     # print("Input: ", input_array.transpose())
                     # print("All outputs: ", all_outputs[0].transpose())

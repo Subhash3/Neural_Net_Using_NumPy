@@ -17,7 +17,9 @@ class Layer() :
         dot_product = np.dot(self.weights, input_array)
         dot_product += self.biases
         # print("Output: ", dot_product.shape)
-        return self.activate(dot_product)
+        outputs = self.activate(dot_product)
+        self.outputs = outputs # Store the output in the layer.
+        return outputs
 
     def activate(self, x) :
         activator = ActivationFunction(self.activation_function)

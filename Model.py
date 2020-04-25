@@ -52,10 +52,10 @@ class NeuralNetwork() :
             if i == self.total_layers -1 :
                 # Output layer
                 output_errors = (target - layer.outputs)**2
-                layer.calculate_gradients(target, layer_type="output")
+                layer.calculate_gradients(target, "output")
             else :
                 next_layer = self.Network[i+1]
-                layer.calculate_gradients(next_layer.weights, next_layer.deltas)
+                layer.calculate_gradients(next_layer.weights, "hidden", next_layer.deltas)
         return sum(output_errors)
 
     def update_weights(self, input_array) :
@@ -78,18 +78,17 @@ class NeuralNetwork() :
                 target_array = data_sample[1]
 
                 all_outputs = self.feedforward(input_array)
-                print("Input: ", input_array)
-                self.display()
+                # print("Input: ", input_array)
+                # self.display()
                 output_error = self.backpropagate(target_array)
                 self.update_weights(input_array)
                 
                 self.MSE += output_error
                 if logging :
-                    # print(input_array, "\x1b[34m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+                    print(input_array.transpose(), "\x1b[34m", all_outputs[0].transpose(), "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
                     # self.display()
-                    pass
-                    # print("Input: ", input_array)
-                    # print("All outputs: ", all_outputs)
+                    # print("Input: ", input_array.transpose())
+                    # print("All outputs: ", all_outputs[0].transpose())
                     # print("Errors: ", output_error)
             self.MSE /= size
             print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)

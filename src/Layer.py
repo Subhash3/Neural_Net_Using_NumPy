@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import numpy as np
-from Activation_Function import ActivationFunction
+from src.Activation_Function import ActivationFunction
 
 np.set_printoptions(precision=20)
 

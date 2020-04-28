@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import numpy as np
-from Layer import Layer
+from src.Layer import Layer
 from matplotlib import pyplot as plt
 
 np.set_printoptions(precision=20)

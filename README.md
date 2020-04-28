@@ -7,6 +7,11 @@ This library is a modification of my previous one. [Click Here](https://github.c
 $ [sudo] pip3 install neuralnetworks-shine7
 ``` 
 
+## Development Installation
+```bash
+$ git clone https://github.com/Subhash3/Neural_Net_Using_NumPy.git
+```
+
 ## Usage
 
 ```python3

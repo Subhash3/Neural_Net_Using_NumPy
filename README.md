@@ -17,7 +17,7 @@ $ git clone https://github.com/Subhash3/Neural_Net_Using_NumPy.git
 ```python3
 >>> from Model import NeuralNetwork
 ```
-### Create a Neural Network
+### Creating a Neural Network
 ```python3
 inputs = 2
 outputs = 1
@@ -57,7 +57,7 @@ def Train(dataset, size, epochs=5000, logging=True) :
 ```
 For Eg: If you want to train your network for 1000 epochs.
 ```python3
->>> network.Train(data, size, epochs=1000, graph=True)
+>>> network.Train(data, size, epochs=1000)
 ```
 Notice that I didn't change the value of log_outputs as I want the output to printed for each epoch.
 

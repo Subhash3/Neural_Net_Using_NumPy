@@ -8,6 +8,21 @@ np.set_printoptions(precision=20)
 
 class NeuralNetwork() :
     def __init__(self, I, O,cost='mse') :
+        """
+        Creates a Feed Forward Neural Network.
+
+        Parameters
+        ----------
+        I : int
+            Number of inputs to the network
+
+        O : int
+            Number of outputs from the network
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         self.Network = list()
         self.I = I
         self.O = O
@@ -29,6 +44,10 @@ class NeuralNetwork() :
             It is an optional parameter.
             Specifies the activation function of the layer.
             Default value is sigmoid.
+
+        Returns
+        -------
+        Doesn't return anything
         """
         # A layer can be thought of as a matrix
         # No. of row = no. of nodes
@@ -43,10 +62,38 @@ class NeuralNetwork() :
         self.total_layers += 1
 
     def compile(self, activation_function="sigmoid") :
+        """
+        Basically, it just adds the output layer to the network.
+
+        Parameters
+        ----------
+        [activation_function] :str
+            It is an optional parameter.
+            Specifies the activation function of the layer.
+            Default value is sigmoid.
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         # Adding output layer
         self.addLayer(self.O, activation_function=activation_function)
     
     def feedforward(self, input_array) :
+        """
+        Feeds the given input throughout the network
+
+        Parameters
+        ----------
+        input_array : np.array()
+            It is columnar vector of size Inputs x 1
+            It is the input fed to the network
+
+        Returns
+        -------
+        all_outputs : np.array()
+            An array of all the outputs produced by each layer.
+        """
         all_outputs = list()
         _i = 1
         for layer in self.Network :
@@ -60,6 +107,21 @@ class NeuralNetwork() :
         return all_outputs
 
     def backpropagate(self, target) :
+        """
+        Backpropagate the error throughout the network
+        This function is called inside the model only.
+
+        Parameters
+        ----------
+        target : np.array()
+            It is columnar vector of size Outputs x 1
+            It is the ground truth value corresponding to the input
+
+        Returns
+        -------
+        Error : float
+            Returns the Mean Squared Error of the particular output
+        """
         for i in range(self.total_layers-1, -1, -1) :
             layer = self.Network[i]
             if i == self.total_layers -1 :
@@ -73,6 +135,20 @@ class NeuralNetwork() :
         return sum(output_errors)
 
     def update_weights(self, input_array) :
+        """
+        Update the weights of the network.
+        This function is called inside the model only.
+
+        Parameters
+        ----------
+        input_array : np.array()
+            It is columnar vector of size Inputs x 1
+            It is the input fed to the network
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         for i in range(self.total_layers-1, -1, -1) :
             layer = self.Network[i]
             if i == 0 :
@@ -84,6 +160,29 @@ class NeuralNetwork() :
                 layer.update_weights(inputs, self.learningRate)
 
     def Train(self, Dataset, size, epochs=5000, logging=True) :
+        """
+        Trains the neural network using the given dataset.
+
+        Parameters
+        ----------
+        Dataset : Dataset() object
+            It is a dataset object contains the dataset.
+
+        size : int
+            Size of the dataset
+
+        [epochs] : int
+            An optional parameter.
+            Number of epochs to train the network. Default value is 5000
+        
+        [logging] : bool
+            An optional parameter.
+            If its true, all outputs from the network will be logged out onto STDOUT for each epoch.
+
+        Returns
+        -------
+        Doesn't return anything.
+        """
         self.all_errors = list()
         self.epochs = epochs
         for epoch in range(epochs) :
@@ -109,9 +208,34 @@ class NeuralNetwork() :
             if logging :
                 print()
     def predict(self, input_array) :
+        """
+        Predicts the output using the given input.
+
+        Parameters
+        ----------
+        input_array : np.array()
+            It is columnar vector of size Inputs x 1
+            It is the input fed to the network
+
+        Returns
+        -------
+        prediction : np.array()
+            Predicted value produced by the network.
+        """
         return self.feedforward(input_array)
 
     def epoch_vs_error(self) :
+        """
+        Plot error vs epoch graph
+
+        Parameters
+        ----------
+        Doesn't accept any parameters
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         all_epochs = [i+1 for i in range(self.epochs)]
         plt.xlabel("Epoch")
         plt.ylabel("Error")
@@ -120,6 +244,18 @@ class NeuralNetwork() :
         plt.show()
 
     def evaluate(self) :
+        """
+        Print the basic information about the network.
+        Like accuracy, error ..etc.
+
+        Parameters
+        ----------
+        Doesn't accept any parameters
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         self.accuracy =  (1 - np.sqrt(self.MSE))*100
         print("\t=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
         print("\tModel is trained for ", self.epochs, "epochs")
@@ -130,6 +266,18 @@ class NeuralNetwork() :
         print("\t=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
         
     def display(self) :
+        """
+        Print the information of each layer of the network.
+        It can be used to debug the network!
+
+        Parameters
+        ----------
+        Doesn't accept any parameters
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         for i in range(self.total_layers) :
             print("Layer: ", i+1)
             self.Network[i].display()

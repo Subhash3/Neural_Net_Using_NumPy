@@ -23,17 +23,17 @@ from Dataset import Dataset
 #     ]
 # ]
 
-input_file = "./datasets/XOR/input.csv"
-target_file = "./datasets/XOR/target.csv"
+input_file = "./datasets/fun/input.csv"
+target_file = "./datasets/fun/target.csv"
 
-datasetCreator = Dataset(2, 1)
+datasetCreator = Dataset(2, 2)
 datasetCreator.makeDataset(input_file, target_file)
 XOR_data, size = datasetCreator.getRawData()
 
-network = NeuralNetwork(2, 1)
-network.addLayer(2, activation_function="sigmoid")
-network.addLayer(2, activation_function="sigmoid")
+network = NeuralNetwork(2, 2)
+network.addLayer(16, activation_function="tanh")
+network.addLayer(16, activation_function="tanh")
 network.compile(activation_function="sigmoid")
-network.Train(XOR_data, size, epochs=3000, logging=False)
+network.Train(XOR_data, size, epochs=1000, logging=False)
 network.epoch_vs_error()
 network.evaluate()

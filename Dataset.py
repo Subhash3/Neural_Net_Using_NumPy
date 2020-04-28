@@ -2,6 +2,8 @@
 
 import numpy as np
 
+np.set_printoptions(precision=20)
+
 class DataSample() :
     def __init__(self) :
         self.input_array = None
@@ -33,6 +35,13 @@ class Dataset() :
             sample.targets = np.reshape(target_array, (self.O, 1))
             self.dataset.append(sample)
             self.size += 1
+    
+    def modifyLists(self, input_array, target_array) :
+        sample = DataSample()
+        sample.input_array = np.reshape(input_array, (self.I, 1))
+        sample.targets = np.reshape(target_array, (self.O, 1))
+        self.dataset.append(sample)
+        self.size += 1
 
     def getRawData(self) :
         return self.dataset, self.size

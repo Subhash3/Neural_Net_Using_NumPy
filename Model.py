@@ -4,6 +4,8 @@ import numpy as np
 from Layer import Layer
 from matplotlib import pyplot as plt
 
+np.set_printoptions(precision=20)
+
 class NeuralNetwork() :
     def __init__(self, I, O,cost='mse') :
         self.Network = list()
@@ -31,7 +33,12 @@ class NeuralNetwork() :
         # A layer can be thought of as a matrix
         # No. of row = no. of nodes
         # No. of columns = No. of weights = No. of inputs + 1 (bias)
-        layer = Layer(num_nodes, self.I, activation_function)
+        if self.total_layers == 0 :
+            inputs = self.I
+        else :
+            last_layer = self.Network[-1]
+            inputs = last_layer.num_nodes
+        layer = Layer(num_nodes, inputs, activation_function)
         self.Network.append(layer)
         self.total_layers += 1
 
@@ -49,7 +56,7 @@ class NeuralNetwork() :
             input_array = outputs
             # print("All outputs: ", all_outputs)
             # print()
-            i += 1
+            # i += 1
         return all_outputs
 
     def backpropagate(self, target) :

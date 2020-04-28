@@ -2,8 +2,6 @@
 
 import numpy as np
 
-np.set_printoptions(precision=20)
-
 class ActivationFunction() :
     def __init__(self, function_name) :
         if function_name == 'sigmoid' :

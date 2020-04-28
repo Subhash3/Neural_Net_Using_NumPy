@@ -2,8 +2,6 @@
 
 import numpy as np
 
-np.set_printoptions(precision=20)
-
 class DataSample() :
     def __init__(self) :
         self.input_array = None

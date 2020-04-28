@@ -3,8 +3,11 @@
 import numpy as np
 from Activation_Function import ActivationFunction
 
+np.set_printoptions(precision=20)
+
 class Layer() :
     def __init__(self, num_nodes, inputs, activation_function) :
+        self.num_nodes = num_nodes
         self.weights = np.random.rand(num_nodes, inputs)
         self.biases = np.random.rand(num_nodes, 1)
         self.outputs = np.random.rand(num_nodes, 1)

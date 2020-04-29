@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import numpy as np
-from src.Layer import Layer
+from Layer import Layer
 from matplotlib import pyplot as plt
 
 np.set_printoptions(precision=20)
@@ -200,7 +200,8 @@ class NeuralNetwork() :
                 
                 self.MSE += output_error
                 if logging or epoch == epochs-1:
-                    print(input_array.transpose(), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+                    # print(input_array.transpose(), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+                    pass
 
             self.MSE /= size
             print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)

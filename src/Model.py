@@ -199,9 +199,8 @@ class NeuralNetwork() :
                 self.update_weights(input_array)
                 
                 self.MSE += output_error
-                if logging or epoch == epochs-1:
-                    # print(input_array.transpose(), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
-                    pass
+                if logging :
+                    print(input_array.transpose(), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
 
             self.MSE /= size
             print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)

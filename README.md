@@ -48,6 +48,35 @@ datasetCreator = Dataset(inputs, outputs)
 datasetCreator.makeDataset(input_file, target_file)
 data, size = datasetCreator.getRawData()
 ```
+
+If you want to manually make a dataset, follow these rules:
+- Dataset must be a list of data samples.
+- A data sample is a list containing inputs and target values.
+- Input and target values are column vector of size (inputs x 1) and (outputs x 1) respectively.
+
+For eg, a typical XOR data set looks something like :
+```python3
+>>> XOR_data = [
+    [
+        np.array([[0], [0]]),
+        np.array([[0]])
+    ],
+    [
+        np.array([[0], [1]]),
+        np.array([[1]])
+    ],
+    [
+        np.array([[1], [0]]),
+        np.array([[1]])
+    ],
+    [
+        np.array([[1], [1]]),
+        np.array([[0]])
+    ]
+]
+>>> size = 4
+```
+
 ### Training The network
 The library provides a *Train* function which accepts the dataset, dataset size, and two optional parameters epochs, and logging.
 ```python3

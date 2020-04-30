@@ -191,8 +191,8 @@ class NeuralNetwork() :
                 data_sample = Dataset[i]
                 # input_array = data_sample[0]
                 # target_array = data_sample[1]
-                input_array = data_sample.input_array
-                target_array = data_sample.targets
+                input_array = data_sample[0]
+                target_array = data_sample[1]
 
                 all_outputs = self.feedforward(input_array)
                 output_error = self.backpropagate(target_array)

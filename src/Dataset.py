@@ -2,11 +2,6 @@
 
 import numpy as np
 
-class DataSample() :
-    def __init__(self) :
-        self.input_array = None
-        self.targets = None
-
 class Dataset() :
     def __init__(self, I, O, split=True) :
         self.I = I
@@ -28,16 +23,16 @@ class Dataset() :
             input_array = list(map(float, inp.split(',')))
             target_array = list(map(float, tar.split(',')))
 
-            sample = DataSample()
-            sample.input_array = np.reshape(input_array, (self.I, 1))
-            sample.targets = np.reshape(target_array, (self.O, 1))
+            sample = list()
+            sample.append(np.reshape(input_array, (self.I, 1)))
+            sample.append(np.reshape(target_array, (self.O, 1)))
             self.dataset.append(sample)
             self.size += 1
     
     def modifyLists(self, input_array, target_array) :
-        sample = DataSample()
-        sample.input_array = np.reshape(input_array, (self.I, 1))
-        sample.targets = np.reshape(target_array, (self.O, 1))
+        sample = list()
+        sample.append(np.reshape(input_array, (self.I, 1)))
+        sample.append(np.reshape(target_array, (self.O, 1)))
         self.dataset.append(sample)
         self.size += 1
 
@@ -48,8 +43,8 @@ class Dataset() :
         for i in range(self.size) :
             sample = self.dataset[i]
             print("Data Sample:", i+1)
-            print("\tInput: ", sample.input_array)
-            print("\tTarget: ", sample.targets)
+            print("\tInput: ", sample[0])
+            print("\tTarget: ", sample[1])
     
     @staticmethod
     def openFile(filename) :

@@ -7,6 +7,7 @@ np.set_printoptions(precision=20)
 
 class Layer() :
     def __init__(self, num_nodes, inputs, activation_function) :
+        self.inputs = inputs
         self.num_nodes = num_nodes
         self.weights = np.random.rand(num_nodes, inputs)
         self.biases = np.random.rand(num_nodes, 1)
@@ -48,8 +49,9 @@ class Layer() :
         self.biases += (self.deltas * learningRate)
 
     def display(self) :
+        print("\tInputs: ", self.inputs)
         print("\tWeights: ", self.weights)
-        print("\tBiases: ", self.biases)
-        print("\tDeltas: ", self.deltas)
-        print("\tOutputs: ", self.outputs)
+        print("\tBiases: ", self.biases.T)
+        print("\tDeltas: ", self.deltas.T)
+        print("\tOutputs: ", self.outputs.T)
         print("\tActivation: ", self.activation_function)

@@ -101,3 +101,23 @@ Know how well the model performed.
 ```python3
 >>> network.evaluate()
 ```
+
+To take a look at all the layers' info
+```python3
+>>> network.display()
+```
+
+### Exporting Model
+You can export a trained model to a json file which can be loaded and used for predictions in the future.
+```python3
+filename = "model.json"
+network.export_model(filename)
+```
+
+### Load Model
+To load a model from an exported model (json) file.
+load\_model is a static function, so you must not call this on a NeuralNetwork object!.
+```python3
+filename = "model.json"
+network = NeuralNetwork.load_model(filename)
+```

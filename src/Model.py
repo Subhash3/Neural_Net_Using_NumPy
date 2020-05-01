@@ -318,7 +318,6 @@ class NeuralNetwork() :
         model_info["model_compiled"] = self.model_compiled
         model_info["layers"] = list()
         for layer in self.Network :
-            layer.display()
             layer_object = dict()
             layer_object["inputs"] = layer.inputs
             layer_object["weights"] = layer.weights.tolist()
@@ -333,7 +332,7 @@ class NeuralNetwork() :
         json_format_string = json.dumps(model_info)
         fhand.write(json_format_string)
         fhand.close()
-        print("[*] Model exported successfully!")
+        print("[*] Model exported successfully to", filename)
 
     
     @staticmethod
@@ -373,6 +372,6 @@ class NeuralNetwork() :
         brain.epochs = model_info["epochs"]
         brain.learningRate = model_info["learning_rate"]
         brain.model_compiled = model_info["model_compiled"]
-        print("[*] Model Loaded successfully")
+        print("[*] (", filename, ") Model Loaded successfully", sep="")
 
         return brain

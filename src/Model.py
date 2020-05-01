@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import numpy as np
-from Layer import Layer
+from .Layer import Layer
 from matplotlib import pyplot as plt
 import json
 
@@ -28,9 +28,10 @@ class NeuralNetwork() :
         self.I = I
         self.O = O
         self.cost = cost
-        self.error = 0
         self.total_layers = 0
         self.learningRate = 0.5
+        self.isLoadedModel = False
+        self.model_compiled = False
     
     def addLayer(self, num_nodes, activation_function="sigmoid") :
         """
@@ -77,6 +78,12 @@ class NeuralNetwork() :
         -------
         Doesn't return anything
         """
+        if self.model_compiled :
+            print("[!!] Model is already compiled!")
+            print("[!!] You cannot add layers anymore")
+            return
+        self.isLoadedModel = False
+        self.model_compiled = True
         # Adding output layer
         self.addLayer(self.O, activation_function=activation_function)
     
@@ -184,6 +191,12 @@ class NeuralNetwork() :
         -------
         Doesn't return anything.
         """
+
+        if not self.model_compiled :
+            print("[-] Network is not complete.!")
+            print("[!!] Please compile the network by adding an output layer")
+            return
+
         self.all_errors = list()
         self.epochs = epochs
         for epoch in range(epochs) :
@@ -210,6 +223,7 @@ class NeuralNetwork() :
 
             if logging :
                 print()
+
     def predict(self, input_array) :
         """
         Predicts the output using the given input.
@@ -225,7 +239,7 @@ class NeuralNetwork() :
         prediction : np.array()
             Predicted value produced by the network.
         """
-        return self.feedforward(input_array)
+        return self.feedforward(input_array)[-1]
 
     def epoch_vs_error(self) :
         """
@@ -239,6 +253,11 @@ class NeuralNetwork() :
         -------
         Doesn't return anything
         """
+        if self.isLoadedModel :
+            print("[!!] You cannot look at epoch vs error graph in a loaded model")
+            print("[!!] You can only look at that while training.!")
+            print("[!!] Make some modifications to the network to own the model")
+            return
         all_epochs = [i+1 for i in range(self.epochs)]
         plt.xlabel("Epoch")
         plt.ylabel("Error")
@@ -288,13 +307,15 @@ class NeuralNetwork() :
         try :
             fhand = open(filename, 'w')
         except Exception as e :
-            print("Unable to open file ", filename, ": ", e)
-            print("Couldn't export model")
+            print("[!!] Unable to open file ", filename, ": ", e)
+            print("[!!] Couldn't export model")
             return
-        print("Exporting Model..")
+
         model_info = dict()
         model_info["inputs"] = self.I
         model_info["outputs"] = self.O
+        model_info["learning_rate"] = self.learningRate
+        model_info["model_compiled"] = self.model_compiled
         model_info["layers"] = list()
         for layer in self.Network :
             layer.display()
@@ -312,7 +333,7 @@ class NeuralNetwork() :
         json_format_string = json.dumps(model_info)
         fhand.write(json_format_string)
         fhand.close()
-        print("Model exported successfully!")
+        print("[*] Model exported successfully!")
 
     
     @staticmethod
@@ -320,9 +341,10 @@ class NeuralNetwork() :
         try :
             fhand = open(filename, 'r')
         except Exception as e :
-            print("Unable to open file ", filename, ": ", e)
-            print("Couldn't load model")
+            print("[!!] Unable to open file ", filename, ": ", e)
+            print("[!!] Couldn't load model")
             return
+
         model_info = json.load(fhand)
         # print(model_info)
 
@@ -331,6 +353,7 @@ class NeuralNetwork() :
 
         brain = NeuralNetwork(inputs, outputs)
         brain.total_layers = 0
+        brain.isLoadedModel = True
 
         for layer_object in model_info["layers"] :
             num_nodes = layer_object["neurons"]
@@ -348,5 +371,8 @@ class NeuralNetwork() :
         brain.accuracy = model_info["accuracy"]
         brain.MSE = model_info["MSE"]
         brain.epochs = model_info["epochs"]
+        brain.learningRate = model_info["learning_rate"]
+        brain.model_compiled = model_info["model_compiled"]
+        print("[*] Model Loaded successfully")
 
         return brain

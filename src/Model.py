@@ -3,6 +3,7 @@
 import numpy as np
 from Layer import Layer
 from matplotlib import pyplot as plt
+import json
 
 np.set_printoptions(precision=20)
 
@@ -205,6 +206,8 @@ class NeuralNetwork() :
             self.MSE /= size
             print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)
             self.all_errors.append(self.MSE)
+            self.accuracy =  (1 - np.sqrt(self.MSE))*100
+
             if logging :
                 print()
     def predict(self, input_array) :
@@ -256,7 +259,6 @@ class NeuralNetwork() :
         -------
         Doesn't return anything
         """
-        self.accuracy =  (1 - np.sqrt(self.MSE))*100
         print("\t=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
         print("\tModel is trained for ", self.epochs, "epochs")
         print("\tModel Accuracy: ", self.accuracy, "%")
@@ -281,3 +283,70 @@ class NeuralNetwork() :
         for i in range(self.total_layers) :
             print("Layer: ", i+1)
             self.Network[i].display()
+
+    def export_model(self, filename) :
+        try :
+            fhand = open(filename, 'w')
+        except Exception as e :
+            print("Unable to open file ", filename, ": ", e)
+            print("Couldn't export model")
+            return
+        print("Exporting Model..")
+        model_info = dict()
+        model_info["inputs"] = self.I
+        model_info["outputs"] = self.O
+        model_info["layers"] = list()
+        for layer in self.Network :
+            layer.display()
+            layer_object = dict()
+            layer_object["inputs"] = layer.inputs
+            layer_object["weights"] = layer.weights.tolist()
+            layer_object["neurons"] = layer.num_nodes
+            layer_object["biases"] = layer.biases.tolist()
+            layer_object["activation_function"] = layer.activation_function
+            model_info["layers"].append(layer_object)
+        model_info["accuracy"] = self.accuracy[0]
+        model_info["MSE"] = self.MSE[0]
+        model_info["epochs"] = self.epochs
+
+        json_format_string = json.dumps(model_info)
+        fhand.write(json_format_string)
+        fhand.close()
+        print("Model exported successfully!")
+
+    
+    @staticmethod
+    def load_model(filename) :
+        try :
+            fhand = open(filename, 'r')
+        except Exception as e :
+            print("Unable to open file ", filename, ": ", e)
+            print("Couldn't load model")
+            return
+        model_info = json.load(fhand)
+        # print(model_info)
+
+        inputs = model_info["inputs"]
+        outputs = model_info["outputs"]
+
+        brain = NeuralNetwork(inputs, outputs)
+        brain.total_layers = 0
+
+        for layer_object in model_info["layers"] :
+            num_nodes = layer_object["neurons"]
+            weights = layer_object["weights"]
+            inputs = layer_object["inputs"]
+            biases = layer_object["biases"]
+            activation_fn = layer_object["activation_function"]
+
+            layer = Layer(num_nodes, inputs, activation_function=activation_fn)
+            layer.weights = np.array(weights)
+            layer.biases = np.array(biases)
+            brain.Network.append(layer)
+            brain.total_layers += 1
+
+        brain.accuracy = model_info["accuracy"]
+        brain.MSE = model_info["MSE"]
+        brain.epochs = model_info["epochs"]
+
+        return brain

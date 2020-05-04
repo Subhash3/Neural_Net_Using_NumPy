@@ -1,12 +1,105 @@
 #!/usr/bin/python3
 
 import numpy as np
-from .Layer import Layer
 from matplotlib import pyplot as plt
 import json
 
 np.set_printoptions(precision=20)
 
+## Class for activation functions
+class ActivationFunction() :
+    def __init__(self, function_name) :
+        if function_name == 'sigmoid' :
+            self.activation_function = self._sigmoid
+        elif function_name == 'tanh' :
+            self.activation_function = self._tanh
+        elif function_name == 'relu':
+            self.activation_function = self._relu
+        elif function_name == 'softmax':
+            self.activation_function = self._softmax
+
+    def activate(self, x, derivative=False) :
+        if derivative :
+            return self.activation_function(x, derivative=True)
+        return self.activation_function(x)
+
+    def _sigmoid(self, x, derivative=False) :
+        if derivative :
+            return x * (1 - x)
+        return 1/(1 + np.exp(-x))
+
+    def _tanh(self, x, derivative=False) :
+        tan = 2/(1 + np.exp(-2*x)) -1
+        if derivative:
+            return (1-tan**2)
+        return tan
+
+    def _relu(self, x, derivative=False) :
+        if derivative:
+            return (x>0).astype(int)
+        return np.max(0,x)
+
+    def _softmax(self, x, derivative=False) :
+        if derivative :
+            return x * (1 - x)
+        # np.exp(x)/np.sum(np.exp(x))
+        exponentials = np.exp(x)
+        total = np.sum(exponentials)
+        return exponentials/total
+
+## Layer class
+class Layer() :
+    def __init__(self, num_nodes, inputs, activation_function) :
+        self.inputs = inputs
+        self.num_nodes = num_nodes
+        self.weights = np.random.rand(num_nodes, inputs)
+        self.biases = np.random.rand(num_nodes, 1)
+        self.outputs = np.random.rand(num_nodes, 1)
+        self.deltas = np.zeros((num_nodes, 1))
+        self.activation_function = activation_function
+
+    def feed(self, input_array) :
+        # print("Weights", self.weights.shape)
+        # print("Inputs ", input_array.shape)
+        dot_product = np.dot(self.weights, input_array)
+        dot_product += self.biases
+        # print("Output: ", dot_product.shape)
+        outputs = self.activate(dot_product)
+        self.outputs = outputs # Store the output in the layer.
+        return outputs
+
+    def activate(self, x) :
+        activator = ActivationFunction(self.activation_function)
+        return activator.activate(x)
+
+    def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=None) :
+        activator = ActivationFunction(self.activation_function)
+        if layer_type == "output" :
+            # print("Output Layer")
+            # target_or_weights = target values
+            self.deltas = (target_or_weights - self.outputs) * activator.activate(self.outputs, derivative=True)
+            # delta = (target - output) * activation_derivative(output)
+        else :
+            # print("Hidden Layer")
+            # target_or_weights = Next layer's weights
+            hidden_errors = np.dot(target_or_weights.transpose(), next_layer_deltas) # Errors in the hidden layer
+            self.deltas = hidden_errors * activator.activate(self.outputs, derivative=True)
+            # deltas += (next_layers weights * next_layers deltas)
+    
+    def update_weights(self, inputs, learningRate) :
+        change_in_weights = np.dot(self.deltas, inputs.T) * learningRate
+        self.weights = np.add(self.weights, change_in_weights)
+        self.biases += (self.deltas * learningRate)
+
+    def display(self) :
+        print("\tInputs: ", self.inputs)
+        print("\tWeights: ", self.weights)
+        print("\tBiases: ", self.biases.T)
+        print("\tDeltas: ", self.deltas.T)
+        print("\tOutputs: ", self.outputs.T)
+        print("\tActivation: ", self.activation_function)
+
+## Main NeuralNetwork class
 class NeuralNetwork() :
     def __init__(self, I, O,cost='mse') :
         """
@@ -304,6 +397,18 @@ class NeuralNetwork() :
             self.Network[i].display()
 
     def export_model(self, filename) :
+        """
+        Export the model to a json file
+
+        Parameters
+        ----------
+        filename: str
+            File name to export model
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         try :
             fhand = open(filename, 'w')
         except Exception as e :
@@ -337,6 +442,19 @@ class NeuralNetwork() :
     
     @staticmethod
     def load_model(filename) :
+        """
+        Load model from an eported (json) model
+
+        Parameters
+        ----------
+        filename : str
+            Exported model (json) file
+
+        Returns
+        -------
+        brain : NeuralNetwork
+            NeuralNetwork object
+        """
         try :
             fhand = open(filename, 'r')
         except Exception as e :
@@ -375,3 +493,57 @@ class NeuralNetwork() :
         print("[*] (", filename, ") Model Loaded successfully", sep="")
 
         return brain
+
+## Dataset class
+class Dataset() :
+    def __init__(self, I, O, split=True) :
+        self.I = I
+        self.O = O
+        self.size = 0
+        self.dataset =  list()
+
+    def makeDataset(self, inputFile, targetFile) :
+        input_handler = self.openFile(inputFile)
+        target_handler = self.openFile(targetFile)
+
+        if not input_handler or not target_handler :
+            print("Unable to create Dataset")
+            return
+        input_lines = input_handler.readlines()
+        target_lines = target_handler.readlines()
+
+        for inp, tar in zip(input_lines, target_lines) :
+            input_array = list(map(float, inp.split(',')))
+            target_array = list(map(float, tar.split(',')))
+
+            sample = list()
+            sample.append(np.reshape(input_array, (self.I, 1)))
+            sample.append(np.reshape(target_array, (self.O, 1)))
+            self.dataset.append(sample)
+            self.size += 1
+    
+    def modifyLists(self, input_array, target_array) :
+        sample = list()
+        sample.append(np.reshape(input_array, (self.I, 1)))
+        sample.append(np.reshape(target_array, (self.O, 1)))
+        self.dataset.append(sample)
+        self.size += 1
+
+    def getRawData(self) :
+        return self.dataset, self.size
+    
+    def display(self) :
+        for i in range(self.size) :
+            sample = self.dataset[i]
+            print("Data Sample:", i+1)
+            print("\tInput: ", sample[0])
+            print("\tTarget: ", sample[1])
+    
+    @staticmethod
+    def openFile(filename) :
+        try :
+            fhand = open(filename)
+        except Exception as e:
+            print("[!!] Exception Occurred while Opening", filename, e)
+            return None
+        return fhand

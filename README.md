@@ -34,7 +34,7 @@ network.compile(activation_function="sigmoid")
 The package contains a Dataset class to create a dataset.
 
 ```python3
->>> from Dataset import Dataset
+>>> from Model import Dataset
 ```
 
 Make sure you have inputs and target values in seperate files in csv format.

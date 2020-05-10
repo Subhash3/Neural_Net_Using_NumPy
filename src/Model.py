@@ -52,9 +52,9 @@ class Layer() :
     def __init__(self, num_nodes, inputs, activation_function) :
         self.inputs = inputs
         self.num_nodes = num_nodes
-        self.weights = np.random.rand(num_nodes, inputs)
-        self.biases = np.random.rand(num_nodes, 1)
-        self.outputs = np.random.rand(num_nodes, 1)
+        self.weights = np.random.randn(num_nodes, inputs)*np.sqrt(2/num_nodes)
+        self.biases = np.random.randn(num_nodes, 1)
+        self.outputs = np.random.randn(num_nodes, 1)
         self.deltas = np.zeros((num_nodes, 1))
         self.activation_function = activation_function
 

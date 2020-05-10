@@ -424,9 +424,9 @@ class NeuralNetwork() :
         model_info["layers"] = list()
         for layer in self.Network :
             layer_object = dict()
+            layer_object["neurons"] = layer.num_nodes
             layer_object["inputs"] = layer.inputs
             layer_object["weights"] = layer.weights.tolist()
-            layer_object["neurons"] = layer.num_nodes
             layer_object["biases"] = layer.biases.tolist()
             layer_object["activation_function"] = layer.activation_function
             model_info["layers"].append(layer_object)
@@ -496,7 +496,7 @@ class NeuralNetwork() :
 
 ## Dataset class
 class Dataset() :
-    def __init__(self, I, O, split=True) :
+    def __init__(self, I, O) :
         self.I = I
         self.O = O
         self.size = 0
@@ -547,3 +547,16 @@ class Dataset() :
             print("[!!] Exception Occurred while Opening", filename, e)
             return None
         return fhand
+    
+    @staticmethod
+    def scaleData(array, size, scale_range=(0, 1)) :
+        if scale_range == (0, 1) :
+            small = large = None
+            for row in array :
+                num = row[0]
+                if small == None or num < small :
+                    small = num
+                if large == None or num > large :
+                    large = num
+            for i in range(size) :
+                array[i] = (array[i] - small) / (large - small)

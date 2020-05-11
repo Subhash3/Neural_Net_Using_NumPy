@@ -3,6 +3,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import json
+import time
 
 np.set_printoptions(precision=20)
 
@@ -294,6 +295,20 @@ class NeuralNetwork() :
         self.epochs = epochs
         for epoch in range(epochs) :
             self.MSE = 0
+            # One Epoch
+            if epoch == 0 :
+                start = time.time()
+            elif epoch == 1 :
+                end = time.time()
+                seconds = (end-start)*epochs
+
+                minutes = seconds//60
+                seconds = seconds % 60
+
+                hours = minutes // 60
+                minutes = minutes % 60
+                print("Estimated Training Time: ", hours, "hrs ", minutes, "min ", seconds, "sec", sep="")
+
             for i in range(size) :
                 data_sample = Dataset[i]
                 # input_array = data_sample[0]

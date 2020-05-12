@@ -126,6 +126,9 @@ class NeuralNetwork() :
         self.learningRate = 0.5
         self.isLoadedModel = False
         self.model_compiled = False
+
+    def setLearningRate(self, lr) :
+        self.learningRate = lr
     
     def addLayer(self, num_nodes, activation_function="sigmoid") :
         """

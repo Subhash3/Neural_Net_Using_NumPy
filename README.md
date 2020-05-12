@@ -107,6 +107,11 @@ To take a look at all the layers' info
 >>> network.display()
 ```
 
+Sometimes, learning rate might have to be altered for better convergence.
+```python3
+>>> network.setLearningRate(0.1)
+```
+
 ### Exporting Model
 You can export a trained model to a json file which can be loaded and used for predictions in the future.
 ```python3

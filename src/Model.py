@@ -18,6 +18,8 @@ class ActivationFunction() :
             self.activation_function = self._relu
         elif function_name == 'softmax':
             self.activation_function = self._softmax
+        elif function_name == "identity" :
+            self.activation_function = self._identity
 
     def activate(self, x, derivative=False) :
         if derivative :
@@ -47,6 +49,11 @@ class ActivationFunction() :
         exponentials = np.exp(x)
         total = np.sum(exponentials)
         return exponentials/total
+    
+    def _identity(self, x, derivative=False) :
+        if derivative :
+            return np.ones_like(x)
+        return x
 
 ## Layer class
 class Layer() :

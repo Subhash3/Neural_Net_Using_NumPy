@@ -521,11 +521,12 @@ class NeuralNetwork() :
 
 ## Dataset class
 class Dataset() :
-    def __init__(self, I, O) :
+    def __init__(self, I, O, scale=False) :
         self.I = I
         self.O = O
         self.size = 0
         self.dataset =  list()
+        self.scale = scale
 
     def makeDataset(self, inputFile, targetFile) :
         input_handler = self.openFile(inputFile)
@@ -542,8 +543,9 @@ class Dataset() :
             target_array = list(map(float, tar.split(',')))
 
             sample = list()
-            input_array = self.scaleData(input_array, self.I)
-            target_array = self.scaleData(target_array, self.O)
+            if self.scale :
+                input_array = self.scaleData(input_array, self.I)
+                target_array = self.scaleData(target_array, self.O)
 
             sample.append(np.reshape(input_array, (self.I, 1)))
             sample.append(np.reshape(target_array, (self.O, 1)))

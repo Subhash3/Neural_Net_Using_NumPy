@@ -535,6 +535,9 @@ class Dataset() :
             target_array = list(map(float, tar.split(',')))
 
             sample = list()
+            input_array = self.scaleData(input_array, self.I)
+            target_array = self.scaleData(target_array, self.O)
+
             sample.append(np.reshape(input_array, (self.I, 1)))
             sample.append(np.reshape(target_array, (self.O, 1)))
             self.dataset.append(sample)
@@ -568,13 +571,14 @@ class Dataset() :
     
     @staticmethod
     def scaleData(array, size, scale_range=(0, 1)) :
-        if scale_range == (0, 1) :
-            small = large = None
-            for row in array :
-                num = row[0]
-                if small == None or num < small :
-                    small = num
-                if large == None or num > large :
-                    large = num
-            for i in range(size) :
-                array[i] = (array[i] - small) / (large - small)
+        MIN = MAX = None
+        for i in range(size) :
+            if MIN == None or array[i] < MIN :
+                MIN = array[i]
+            if MAX == None or array[i] > MAX :
+                MAX = array[i]
+
+        for i in range(size) :
+            array[i] = (array[i] - MIN)/(MAX - MIN)
+
+        return array

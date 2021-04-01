@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from src.Model import NeuralNetwork
+from src.NeuralNetwork import NeuralNetwork
 from src.Dataset import Dataset
 import numpy as np
 
@@ -32,12 +32,18 @@ size = 4
 # datasetCreator.makeDataset(input_file, target_file)
 # XOR_data, size = datasetCreator.getRawData()
 
-network = NeuralNetwork(2, 2)
-network.addLayer(4, activation_function="tanh")
-# network.addLayer(16, activation_function="tanh")
+network = NeuralNetwork(2, 1)
+network.setLearningRate(0.1)
+network.addLayer(16, activation_function="tanh")
+network.addLayer(16, activation_function="tanh")
 network.compile(activation_function="sigmoid")
 network.Train(XOR_data, size, epochs=500, logging=False)
-# network.epoch_vs_error()
+network.epoch_vs_error()
+network.evaluate()
 
 file_to_export = "xor-model.json"
 network.export_model(file_to_export)
+
+test = np.reshape([1, 1], (2, 1))
+out = network.predict(test)
+print(out)

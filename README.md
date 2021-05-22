@@ -128,10 +128,10 @@ network = NeuralNetwork.load_model(filename)
 ```
 
 ### Todo
-    - [ ] Implement Cross Entropy Loss
     - [ ] Data scaling
         - [x] Min Max scaler
         - [ ] Data Standardization
+    - [ ] Implement Cross Entropy Loss
     - [ ] Linear and Relu activation function
     - [ ] Ability to perform regression
     - [ ] Convolution Nets

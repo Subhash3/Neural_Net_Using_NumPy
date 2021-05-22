@@ -126,3 +126,13 @@ load\_model is a static function, so you must not call this on a NeuralNetwork o
 filename = "model.json"
 network = NeuralNetwork.load_model(filename)
 ```
+
+### Todo
+    - [ ] Implement Cross Entropy Loss
+    - [ ] Data scaling
+        - [x] Min Max scaler
+        - [ ] Data Standardization
+    - [ ] Linear and Relu activation function
+    - [ ] Ability to perform regression
+    - [ ] Convolution Nets
+    - [ ] Recurrent Nets

@@ -175,7 +175,7 @@ class NeuralNetwork():
                 inputs = self.Network[i-1].outputs
                 layer.update_weights(inputs, self.learningRate)
 
-    def Train(self, Dataset, size, epochs=5000, logging=True):
+    def Train(self, Dataset, size, epochs=5000, logging=False, epoch_logging=True):
         """
         Trains the neural network using the given dataset.
 
@@ -194,6 +194,10 @@ class NeuralNetwork():
         [logging] : bool
             An optional parameter.
             If its true, all outputs from the network will be logged out onto STDOUT for each epoch.
+
+        [epoch_logging] : bool
+            An optional parameter.
+            If it is true, Error in each epoch will be logged to STDOUT.
 
         Returns
         -------

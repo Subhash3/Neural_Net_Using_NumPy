@@ -245,7 +245,8 @@ class NeuralNetwork():
                     ), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
 
             self.MSE /= size
-            print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)
+            if epoch_logging:
+                print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)
             self.all_errors.append(self.MSE)
             self.accuracy = (1 - np.sqrt(self.MSE))*100
 

@@ -4,7 +4,7 @@ This library is a modification of my previous one. [Click Here](https://github.c
 
 ## Installation  
 ```bash
-$ [sudo] pip3 install neuralnetworks-shine7
+$ [sudo] pip3 install shineflow
 ``` 
 
 ## Development Installation
@@ -15,7 +15,7 @@ $ git clone https://github.com/Subhash3/Neural_Net_Using_NumPy.git
 ## Usage
 
 ```python3
->>> from src import NeuralNetwork
+>>> from shineflow import NeuralNetwork
 ```
 ### Creating a Neural Network
 ```python3
@@ -34,7 +34,7 @@ network.compile(activation_function="sigmoid")
 The package contains a Dataset class to create a dataset.
 
 ```python3
->>> from src import Dataset
+>>> from shineflow import Dataset
 ```
 
 Make sure you have inputs and target values in seperate files in csv format.

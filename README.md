@@ -15,7 +15,7 @@ $ git clone https://github.com/Subhash3/Neural_Net_Using_NumPy.git
 ## Usage
 
 ```python3
->>> from Model import NeuralNetwork
+>>> from src import NeuralNetwork
 ```
 ### Creating a Neural Network
 ```python3
@@ -34,7 +34,7 @@ network.compile(activation_function="sigmoid")
 The package contains a Dataset class to create a dataset.
 
 ```python3
->>> from Model import Dataset
+>>> from src import Dataset
 ```
 
 Make sure you have inputs and target values in seperate files in csv format.

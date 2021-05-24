@@ -38,6 +38,18 @@ class NeuralNetwork():
         self.model_compiled = False
 
     def setLearningRate(self, lr):
+        """
+        Modifies the learning rate of the network.
+
+        Parameters
+        ----------
+        lr : float
+            New learning rate
+
+        Returns
+        -------
+        Doesn't return anything
+        """
         self.learningRate = lr
 
     def addLayer(self, num_nodes, activation_function="sigmoid"):

@@ -22,7 +22,8 @@ class ActivationFunction():
 
     def _sigmoid(self, x, derivative=False):
         if derivative:
-            return x * (1 - x)
+            y = self._sigmoid(x)
+            return y * (1 - y)
         return 1/(1 + np.exp(-x))
 
     def _tanh(self, x, derivative=False):

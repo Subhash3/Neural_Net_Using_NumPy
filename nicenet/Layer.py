@@ -1,35 +1,40 @@
 import numpy as np
 from .ActivationFunction import ActivationFunction
-
+from .LossFunctions import LossFunctions
 
 # Layer class
+
+
 class Layer:
-    def __init__(self, num_nodes, inputs, activation_function):
+    def __init__(self, num_nodes, inputs, activation_function, loss_function):
         """
-        Layer constructor
+            Layer constructor
 
-        Parameters
-        ----------
-        num_nodes : int
-            No. of nodes in the layer
+            Parameters
+            ----------
+            num_nodes : int
+                No. of nodes in the layer
 
-        inputs : int
-            No. of inputs to the layer
+            inputs : int
+                No. of inputs to the layer
 
-        activation_function
+            activation_function
 
-        Returns
-        -------
-        None
+            Returns
+            -------
+            None
         """
         self.inputs = inputs
         self.num_nodes = num_nodes
-        self.weights = np.random.randn(num_nodes, inputs) * np.sqrt(2 / num_nodes)
+        self.weights = np.random.randn(
+            num_nodes, inputs) * np.sqrt(2 / num_nodes)
         self.biases = np.random.randn(num_nodes, 1)
         self.output_array = np.random.randn(num_nodes, 1)
         self.deltas = np.zeros((num_nodes, 1))
         self.activation_function = activation_function
         self.activator = ActivationFunction(self.activation_function)
+        self.loss_function = loss_function
+        self.loss_computer = LossFunctions(self.loss_function)
 
     def feed(self, input_array):
         # print("Weights", self.weights.shape)
@@ -50,6 +55,9 @@ class Layer:
         if layer_type == "output":
             # print("Output Layer")
             # target_or_weights => target values
+            # print("a:", target_or_weights - self.output_array)
+            # print("b:", self.loss_computer.get_gradient(
+            #     self.output_array, target_or_weights))
             self.deltas = (
                 target_or_weights - self.output_array
             ) * self.activator.activate(self.output_array, derivative=True)

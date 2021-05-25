@@ -6,6 +6,7 @@ from .Layer import Layer
 from .Dataset import Dataset
 import json
 import time
+from .LossFunctions import LossFunctions
 
 np.set_printoptions(precision=20)
 
@@ -40,6 +41,7 @@ class NeuralNetwork:
         self.I = I
         self.O = O
         self.cost = cost
+        self.loss_computer = LossFunctions(cost)
         self.total_layers = 0
         self.learningRate = 0.5
         self.isLoadedModel = False
@@ -93,7 +95,7 @@ class NeuralNetwork:
         else:
             last_layer = self.Network[-1]
             inputs = last_layer.num_nodes
-        layer = Layer(num_nodes, inputs, activation_function)
+        layer = Layer(num_nodes, inputs, activation_function, self.cost)
         self.Network.append(layer)
         self.total_layers += 1
 
@@ -169,7 +171,8 @@ class NeuralNetwork:
             layer = self.Network[i]
             if i == self.total_layers - 1:
                 # print("Output layer: ", layer.output_array, "Target: ", target)
-                output_errors = (target - layer.output_array) ** 2
+                output_errors = self.loss_computer.get_loss(
+                    target, layer.output_array)
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
             else:
@@ -409,6 +412,7 @@ class NeuralNetwork:
             layer_object["weights"] = layer.weights.tolist()
             layer_object["biases"] = layer.biases.tolist()
             layer_object["activation_function"] = layer.activation_function
+            layer_object["loss_function"] = layer.loss_function
             model_info["layers"].append(layer_object)
         model_info["accuracy"] = self.accuracy[0]
         model_info["MSE"] = self.MSE[0]
@@ -457,8 +461,10 @@ class NeuralNetwork:
             inputs = layer_object["inputs"]
             biases = layer_object["biases"]
             activation_fn = layer_object["activation_function"]
+            loss_function = layer_object["loss_function"]
 
-            layer = Layer(num_nodes, inputs, activation_function=activation_fn)
+            layer = Layer(
+                num_nodes, inputs, activation_function=activation_fn, loss_function=loss_function)
             layer.weights = np.array(weights)
             layer.biases = np.array(biases)
             brain.Network.append(layer)

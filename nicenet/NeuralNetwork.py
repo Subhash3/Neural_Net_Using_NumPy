@@ -24,6 +24,14 @@ class NeuralNetwork():
         O : int
             Number of outputs from the network
 
+        [cost]: string
+            The cost/loss function used by the neural network.
+            Default value is 'mse' which stands for Mean Squared Error.
+
+            Available options:
+                mse => Mean Squared Error
+                ce => Cross Entropy
+
         Returns
         -------
         Doesn't return anything
@@ -65,6 +73,13 @@ class NeuralNetwork():
             It is an optional parameter.
             Specifies the activation function of the layer.
             Default value is sigmoid.
+
+            Available options:
+                sigmoid,
+                tanh,
+                linear,
+                identity,
+                softmax
 
         Returns
         -------
@@ -113,8 +128,8 @@ class NeuralNetwork():
         Parameters
         ----------
         input_array : np.array()
+            Input to be fed to the network.
             It is columnar vector of size Inputs x 1
-            It is the input fed to the network
 
         Returns
         -------
@@ -141,13 +156,14 @@ class NeuralNetwork():
         Parameters
         ----------
         target : np.array()
+            It is the ground truth value corresponding to the input.
             It is columnar vector of size Outputs x 1
-            It is the ground truth value corresponding to the input
 
         Returns
         -------
         Error : float
-            Returns the Mean Squared Error of the particular output
+            # Returns the Mean Squared Error of the particular output
+            Returns the error using the specified loss function.
         """
         for i in range(self.total_layers-1, -1, -1):
             layer = self.Network[i]
@@ -170,8 +186,8 @@ class NeuralNetwork():
         Parameters
         ----------
         input_array : np.array()
-            It is columnar vector of size Inputs x 1
             It is the input fed to the network
+            It is columnar vector of size Inputs x 1
 
         Returns
         -------
@@ -193,8 +209,7 @@ class NeuralNetwork():
 
         Parameters
         ----------
-        Dataset : Dataset() object
-            It is a dataset object contains the dataset.
+        Dataset : List[List[np.ndarray]]
 
         size : int
             Size of the dataset
@@ -267,7 +282,7 @@ class NeuralNetwork():
 
     def predict(self, input_array):
         """
-        Predicts the output using the given input.
+        Predicts the output using a given input.
 
         Parameters
         ----------

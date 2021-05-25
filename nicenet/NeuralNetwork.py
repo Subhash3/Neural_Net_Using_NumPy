@@ -10,9 +10,9 @@ import time
 np.set_printoptions(precision=20)
 
 
-class NeuralNetwork():
+class NeuralNetwork:
     # Main NeuralNetwork class
-    def __init__(self, I, O, cost='mse'):
+    def __init__(self, I, O, cost="mse"):
         """
         Creates a Feed Forward Neural Network.
 
@@ -165,17 +165,18 @@ class NeuralNetwork():
             # Returns the Mean Squared Error of the particular output
             Returns the error using the specified loss function.
         """
-        for i in range(self.total_layers-1, -1, -1):
+        for i in range(self.total_layers - 1, -1, -1):
             layer = self.Network[i]
             if i == self.total_layers - 1:
-                # print("Output layer: ", layer.outputs, "Target: ", target)
-                output_errors = (target - layer.outputs)**2
+                # print("Output layer: ", layer.output_array, "Target: ", target)
+                output_errors = (target - layer.output_array) ** 2
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
             else:
-                next_layer = self.Network[i+1]
+                next_layer = self.Network[i + 1]
                 layer.calculate_gradients(
-                    next_layer.weights, "hidden", next_layer.deltas)
+                    next_layer.weights, "hidden", next_layer.deltas
+                )
         return sum(output_errors)
 
     def update_weights(self, input_array):
@@ -193,14 +194,14 @@ class NeuralNetwork():
         -------
         Doesn't return anything
         """
-        for i in range(self.total_layers-1, -1, -1):
+        for i in range(self.total_layers - 1, -1, -1):
             layer = self.Network[i]
             if i == 0:
                 # if it is the first layer => inputs = input_array
                 layer.update_weights(input_array, self.learningRate)
             else:
                 # not the first most => inputs = previous layer's output
-                inputs = self.Network[i-1].outputs
+                inputs = self.Network[i - 1].output_array
                 layer.update_weights(inputs, self.learningRate)
 
     def Train(self, Dataset, size, epochs=5000, logging=False, epoch_logging=True):
@@ -245,15 +246,23 @@ class NeuralNetwork():
                 start = time.time()
             elif epoch == 1:
                 end = time.time()
-                seconds = (end-start)*epochs
+                seconds = (end - start) * epochs
 
-                minutes = seconds//60
+                minutes = seconds // 60
                 seconds = seconds % 60
 
                 hours = minutes // 60
                 minutes = minutes % 60
-                print("Estimated Training Time: ", hours, "hrs ",
-                      minutes, "min ", seconds, "sec", sep="")
+                print(
+                    "Estimated Training Time: ",
+                    hours,
+                    "hrs ",
+                    minutes,
+                    "min ",
+                    seconds,
+                    "sec",
+                    sep="",
+                )
 
             for i in range(size):
                 data_sample = Dataset[i]
@@ -268,14 +277,22 @@ class NeuralNetwork():
 
                 self.MSE += output_error
                 if logging:
-                    print(input_array.transpose(
-                    ), "\x1b[35m", all_outputs, "\x1b[0m", target_array, "\x1b[31m", output_error, "\x1b[0m")
+                    print(
+                        input_array.transpose(),
+                        "\x1b[35m",
+                        all_outputs,
+                        "\x1b[0m",
+                        target_array,
+                        "\x1b[31m",
+                        output_error,
+                        "\x1b[0m",
+                    )
 
             self.MSE /= size
             if epoch_logging:
-                print("Epoch: ", epoch+1, " ==> Error: ", self.MSE)
+                print("Epoch: ", epoch + 1, " ==> Error: ", self.MSE)
             self.all_errors.append(self.MSE)
-            self.accuracy = (1 - np.sqrt(self.MSE))*100
+            self.accuracy = (1 - np.sqrt(self.MSE)) * 100
 
             if logging:
                 print()
@@ -314,7 +331,7 @@ class NeuralNetwork():
             print("[!!] You can only look at that while training.!")
             print("[!!] Make some modifications to the network to own the model")
             return
-        all_epochs = [i+1 for i in range(self.epochs)]
+        all_epochs = [i + 1 for i in range(self.epochs)]
         plt.xlabel("Epoch")
         plt.ylabel("Error")
         plt.title("Epoch vs Error")
@@ -356,7 +373,7 @@ class NeuralNetwork():
         Doesn't return anything
         """
         for i in range(self.total_layers):
-            print("Layer: ", i+1)
+            print("Layer: ", i + 1)
             self.Network[i].display()
 
     def export_model(self, filename):
@@ -373,7 +390,7 @@ class NeuralNetwork():
         Doesn't return anything
         """
         try:
-            fhand = open(filename, 'w')
+            fhand = open(filename, "w")
         except Exception as e:
             print("[!!] Unable to open file ", filename, ": ", e)
             print("[!!] Couldn't export model")
@@ -418,7 +435,7 @@ class NeuralNetwork():
             NeuralNetwork object
         """
         try:
-            fhand = open(filename, 'r')
+            fhand = open(filename, "r")
         except Exception as e:
             print("[!!] Unable to open file ", filename, ": ", e)
             print("[!!] Couldn't load model")

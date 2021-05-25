@@ -128,11 +128,13 @@ network = NeuralNetwork.load_model(filename)
 ```
 
 ### Todo
+    - [ ] Generalize the gradient descent algorithm
+        - [x] Generalise the loss function => Write a separate class for it!
+        - [ ] Implement Cross Entropy Loss
     - [ ] Data scaling
         - [x] Min Max scaler
         - [ ] Data Standardization
-    - [ ] Implement Cross Entropy Loss
-    - [ ] Linear and Relu activation function
+    - [ ] Linear and Relu activation functions
     - [ ] Ability to perform regression
     - [ ] Convolution Nets
     - [ ] Recurrent Nets

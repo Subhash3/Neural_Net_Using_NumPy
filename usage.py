@@ -1,26 +1,14 @@
 #!/usr/bin/python3
 
-from src.NeuralNetwork import NeuralNetwork
-from src.Dataset import Dataset
+from nicenet import NeuralNetwork
+from nicenet import Dataset
 import numpy as np
 
 XOR_data = [
-    [
-        np.array([[0], [0]]),
-        np.array([[0]])
-    ],
-    [
-        np.array([[0], [1]]),
-        np.array([[1]])
-    ],
-    [
-        np.array([[1], [0]]),
-        np.array([[1]])
-    ],
-    [
-        np.array([[1], [1]]),
-        np.array([[0]])
-    ]
+    [np.array([[0], [0]]), np.array([[0]])],
+    [np.array([[0], [1]]), np.array([[1]])],
+    [np.array([[1], [0]]), np.array([[1]])],
+    [np.array([[1], [1]]), np.array([[0]])],
 ]
 
 size = 4
@@ -38,12 +26,17 @@ network.addLayer(16, activation_function="tanh")
 network.addLayer(16, activation_function="tanh")
 network.compile(activation_function="sigmoid")
 network.Train(XOR_data, size, epochs=500, logging=False)
-network.epoch_vs_error()
+# network.epoch_vs_error()
 network.evaluate()
 
 file_to_export = "xor-model.json"
 network.export_model(file_to_export)
 
+test = np.reshape([1, 1], (2, 1))
+out = network.predict(test)
+print(out)
+
+new_network = NeuralNetwork.load_model(file_to_export)
 test = np.reshape([1, 1], (2, 1))
 out = network.predict(test)
 print(out)

@@ -43,7 +43,7 @@ class NeuralNetwork:
         self.cost = cost
         self.loss_computer = LossFunctions(cost)
         self.total_layers = 0
-        self.learningRate = 0.5
+        self.learningRate = 0.01
         self.isLoadedModel = False
         self.model_compiled = False
 

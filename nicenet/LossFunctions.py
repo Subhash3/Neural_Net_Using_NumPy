@@ -28,6 +28,7 @@ class LossFunctions:
         return gradient
 
     def _mse(self, outputs, targets, derivative=False):
+        # print("hihi")
         error = np.subtract(targets, outputs)
         if derivative:
             return error

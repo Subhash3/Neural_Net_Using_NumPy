@@ -22,7 +22,8 @@ class ActivationFunction():
 
     def _sigmoid(self, x, derivative=False):
         if derivative:
-            y = self._sigmoid(x)
+            # y = self._sigmoid(x)
+            y = x
             return y * (1 - y)
         return 1/(1 + np.exp(-x))
 

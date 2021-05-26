@@ -180,7 +180,7 @@ class NeuralNetwork:
                 layer.calculate_gradients(
                     next_layer.weights, "hidden", next_layer.deltas
                 )
-        return sum(output_errors)
+        return output_errors
 
     def update_weights(self, input_array):
         """
@@ -285,7 +285,7 @@ class NeuralNetwork:
                         "\x1b[35m",
                         all_outputs,
                         "\x1b[0m",
-                        target_array,
+                        target_array.transpose(),
                         "\x1b[31m",
                         output_error,
                         "\x1b[0m",

@@ -72,8 +72,8 @@ class Layer:
 
     def update_weights(self, inputs, learningRate):
         change_in_weights = np.dot(self.deltas, inputs.T) * learningRate
-        self.weights = np.add(self.weights, change_in_weights)
-        self.biases += self.deltas * learningRate
+        self.weights = np.subtract(self.weights, change_in_weights)
+        self.biases = np.subtract(self.biases, self.deltas * learningRate)
 
     def display(self):
         print("\tInputs: ", self.inputs)

@@ -31,8 +31,8 @@ class LossFunctions:
         # print("hihi")
         error = np.subtract(targets, outputs)
         if derivative:
-            return error
-        return error*error
+            return -1*error
+        return np.mean(error*error)
 
     def _cross_entropy(self, outputs, targets, derivative=False):
         error = np.subtract(targets, outputs)

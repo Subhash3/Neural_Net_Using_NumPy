@@ -1,6 +1,7 @@
 from typing import Dict
 import random
 from math import floor
+import numpy as np
 
 
 def customArgmax(data: Dict[str, float]):
@@ -33,3 +34,10 @@ def splitArr(array: list, ratio: float):
     secondPart: list = array[m: n]
 
     return [firstPart, secondPart]
+
+
+def one_hot_encode(num, size) :
+    vector = np.array([0]*size)
+    vector[num-1] = 1
+
+    return vector.T

@@ -52,25 +52,22 @@ class Layer:
         return self.activator.activate(x)
 
     def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=None):
+        activation_gradient = self.activator.activate(
+            self.output_array, derivative=True)
         if layer_type == "output":
             # print("Output Layer")
             # target_or_weights => target values
-            # print("a:", target_or_weights - self.output_array)
-            # print("b:", self.loss_computer.get_gradient(
-            #     self.output_array, target_or_weights))
-            self.deltas = (
-                target_or_weights - self.output_array
-            ) * self.activator.activate(self.output_array, derivative=True)
+            loss_gradient = self.loss_computer.get_gradient(
+                self.output_array, target_or_weights)
+            self.deltas = loss_gradient * activation_gradient
+
             # delta = (target - output) * activation_derivative(output)
         else:
             # print("Hidden Layer")
             # target_or_weights = Next layer's weights
-            hidden_errors = np.dot(
-                target_or_weights.transpose(), next_layer_deltas
-            )  # Errors in the hidden layer
-            self.deltas = hidden_errors * self.activator.activate(
-                self.output_array, derivative=True
-            )
+            hidden_errors = np.dot(target_or_weights.transpose(
+            ), next_layer_deltas)  # Errors in the hidden layer
+            self.deltas = hidden_errors * activation_gradient
             # deltas += (next_layers weights * next_layers deltas)
 
     def update_weights(self, inputs, learningRate):

@@ -172,7 +172,7 @@ class NeuralNetwork:
             if i == self.total_layers - 1:
                 # print("Output layer: ", layer.output_array, "Target: ", target)
                 output_errors = self.loss_computer.get_loss(
-                    target, layer.output_array)
+                    layer.output_array, target)
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
             else:
@@ -243,7 +243,7 @@ class NeuralNetwork:
         self.all_errors = list()
         self.epochs = epochs
         for epoch in range(epochs):
-            self.MSE = 0
+            self.loss = 0
             # One Epoch
             if epoch == 0:
                 start = time.time()
@@ -278,7 +278,7 @@ class NeuralNetwork:
                 output_error = self.backpropagate(target_array)
                 self.update_weights(input_array)
 
-                self.MSE += output_error
+                self.loss += output_error
                 if logging:
                     print(
                         input_array.transpose(),
@@ -291,11 +291,11 @@ class NeuralNetwork:
                         "\x1b[0m",
                     )
 
-            self.MSE /= size
+            self.loss /= size
             if epoch_logging:
-                print("Epoch: ", epoch + 1, " ==> Error: ", self.MSE)
-            self.all_errors.append(self.MSE)
-            self.accuracy = (1 - np.sqrt(self.MSE)) * 100
+                print("Epoch: ", epoch + 1, " ==> Error: ", self.loss)
+            self.all_errors.append(self.loss)
+            self.accuracy = (1 - np.sqrt(self.loss)) * 100
 
             if logging:
                 print()
@@ -415,7 +415,7 @@ class NeuralNetwork:
             layer_object["loss_function"] = layer.loss_function
             model_info["layers"].append(layer_object)
         model_info["accuracy"] = self.accuracy[0]
-        model_info["MSE"] = self.MSE[0]
+        model_info["loss"] = self.loss[0]
         model_info["epochs"] = self.epochs
 
         json_format_string = json.dumps(model_info)
@@ -471,7 +471,7 @@ class NeuralNetwork:
             brain.total_layers += 1
 
         brain.accuracy = model_info["accuracy"]
-        brain.MSE = model_info["MSE"]
+        brain.loss = model_info["loss"]
         brain.epochs = model_info["epochs"]
         brain.learningRate = model_info["learning_rate"]
         brain.model_compiled = model_info["model_compiled"]

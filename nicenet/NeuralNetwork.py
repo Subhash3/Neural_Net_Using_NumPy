@@ -7,6 +7,7 @@ from .Dataset import Dataset
 import json
 import time
 from .LossFunctions import LossFunctions
+import typing
 
 np.set_printoptions(precision=20)
 
@@ -37,7 +38,7 @@ class NeuralNetwork:
         -------
         Doesn't return anything
         """
-        self.Network = list()
+        self.Network: typing.List[Layer] = list()
         self.I = I
         self.O = O
         self.cost = cost
@@ -122,6 +123,11 @@ class NeuralNetwork:
         self.model_compiled = True
         # Adding output layer
         self.addLayer(self.O, activation_function=activation_function)
+
+        # for layer in self.Network :
+        #     print(np.mean(layer.weights), np.std(layer.weights))
+        #     print(np.mean(layer.biases), np.std(layer.biases))
+        #     print()
 
     def feedforward(self, input_array):
         """
@@ -414,8 +420,8 @@ class NeuralNetwork:
             layer_object["activation_function"] = layer.activation_function
             layer_object["loss_function"] = layer.loss_function
             model_info["layers"].append(layer_object)
-        model_info["accuracy"] = self.accuracy[0]
-        model_info["loss"] = self.loss[0]
+        model_info["accuracy"] = self.accuracy
+        model_info["loss"] = self.loss
         model_info["epochs"] = self.epochs
 
         json_format_string = json.dumps(model_info)

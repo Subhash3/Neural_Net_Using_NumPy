@@ -20,12 +20,14 @@ size = 4
 # datasetCreator.makeDataset(input_file, target_file)
 # XOR_data, size = datasetCreator.getRawData()
 
-network = NeuralNetwork(2, 1)
+network = NeuralNetwork(2, 1, cost="ce")
 network.setLearningRate(0.1)
-network.addLayer(16, activation_function="tanh")
-network.addLayer(16, activation_function="tanh")
+network.addLayer(8, activation_function="tanh")
+network.addLayer(8, activation_function="tanh")
+network.addLayer(8, activation_function="tanh")
+network.addLayer(8, activation_function="tanh")
 network.compile(activation_function="sigmoid")
-network.Train(XOR_data, size, epochs=500, logging=False)
+network.Train(XOR_data, size, epochs=200, logging=False)
 # network.epoch_vs_error()
 network.evaluate()
 

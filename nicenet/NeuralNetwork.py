@@ -181,7 +181,8 @@ class NeuralNetwork:
                 # print("Output layer: ", layer.output_array, "Target: ", target)
                 output_errors = self.loss_computer.get_loss(
                     layer.output_array, target)
-                is_correct_output:bool = np.argmax(layer.output_array) == np.argmax(target)
+                is_correct_output: bool = np.argmax(
+                    layer.output_array) == np.argmax(target)
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
             else:
@@ -251,6 +252,10 @@ class NeuralNetwork:
 
         self.all_errors = list()
         self.epochs = epochs
+
+        epoch_log_format_string = "{:>10}" * 3
+        print(epoch_log_format_string.format(
+            "Epoch", f"({self.cost}) Error", "(%) Accuracy"))
         for epoch in range(epochs):
             self.loss = 0
             # One Epoch
@@ -285,10 +290,11 @@ class NeuralNetwork:
                 target_array = data_sample[1]
 
                 all_outputs = self.feedforward(input_array)
-                output_error, is_correct_output = self.backpropagate(target_array)
+                output_error, is_correct_output = self.backpropagate(
+                    target_array)
                 self.update_weights(input_array)
 
-                if is_correct_output :
+                if is_correct_output:
                     correct += 1
                 self.loss += output_error
                 if logging:
@@ -304,10 +310,13 @@ class NeuralNetwork:
                     )
 
             self.loss /= size
-            if epoch_logging:
-                print(f"Epoch: {epoch + 1} ==> ({self.cost}) Error: {self.loss}")
             self.all_errors.append(self.loss)
             self.accuracy = (correct*100)/size
+
+            if epoch_logging:
+                # print(epoch_log_format_string.format(epoch+1, self.loss, self.accuracy))
+                print(
+                    f"Epoch: {epoch + 1} ==> ({self.cost}) Error: {self.loss}, (%) Accuracy: {self.accuracy}")
 
             if logging:
                 print()

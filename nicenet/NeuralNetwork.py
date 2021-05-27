@@ -181,6 +181,7 @@ class NeuralNetwork:
                 # print("Output layer: ", layer.output_array, "Target: ", target)
                 output_errors = self.loss_computer.get_loss(
                     layer.output_array, target)
+                is_correct_output:bool = np.argmax(layer.output_array) == np.argmax(target)
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
             else:
@@ -188,7 +189,7 @@ class NeuralNetwork:
                 layer.calculate_gradients(
                     next_layer.weights, "hidden", next_layer.deltas
                 )
-        return output_errors
+        return output_errors, is_correct_output
 
     def update_weights(self, input_array):
         """
@@ -275,6 +276,7 @@ class NeuralNetwork:
                     sep="",
                 )
 
+            correct = 0
             for i in range(size):
                 data_sample = Dataset[i]
                 # input_array = data_sample[0]
@@ -283,9 +285,11 @@ class NeuralNetwork:
                 target_array = data_sample[1]
 
                 all_outputs = self.feedforward(input_array)
-                output_error = self.backpropagate(target_array)
+                output_error, is_correct_output = self.backpropagate(target_array)
                 self.update_weights(input_array)
 
+                if is_correct_output :
+                    correct += 1
                 self.loss += output_error
                 if logging:
                     print(
@@ -301,9 +305,9 @@ class NeuralNetwork:
 
             self.loss /= size
             if epoch_logging:
-                print("Epoch: ", epoch + 1, " ==> Error: ", self.loss)
+                print(f"Epoch: {epoch + 1} ==> ({self.cost}) Error: {self.loss}")
             self.all_errors.append(self.loss)
-            self.accuracy = (1 - np.sqrt(self.loss)) * 100
+            self.accuracy = (correct*100)/size
 
             if logging:
                 print()

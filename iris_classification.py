@@ -7,7 +7,7 @@ import numpy as np
 
 inputs = 4
 outputs = 3
-network = NeuralNetwork(inputs, outputs)
+network = NeuralNetwork(inputs, outputs, cost="ce")
 network.addLayer(8, activation_function="sigmoid")
 network.addLayer(8, activation_function="sigmoid")
 network.compile(activation_function="softmax")

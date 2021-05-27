@@ -27,7 +27,7 @@ network.addLayer(8, activation_function="tanh")
 network.addLayer(8, activation_function="tanh")
 network.addLayer(8, activation_function="tanh")
 network.compile(activation_function="sigmoid")
-network.Train(XOR_data, size, epochs=200, logging=False)
+network.Train(XOR_data, size, epochs=5, logging=False)
 # network.epoch_vs_error()
 network.evaluate()
 

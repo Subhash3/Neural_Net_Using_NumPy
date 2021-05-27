@@ -37,5 +37,7 @@ class LossFunctions:
     def _cross_entropy(self, outputs, targets, derivative=False):
         error = np.subtract(targets, outputs)
         if derivative:
-            return error
-        return -1 * targets*np.log(outputs)
+            return -1*error
+        # print("cross_entropy:", targets*np.log(outputs))
+        # print("cross_entropy:", np.sum(targets*np.log(outputs)))
+        return -1*np.sum(targets*np.log(outputs))

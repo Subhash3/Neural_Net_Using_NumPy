@@ -38,6 +38,8 @@ class NeuralNetwork:
         -------
         Doesn't return anything
         """
+
+        # print("Construct")
         self.Network: typing.List[Layer] = list()
         self.I = I
         self.O = O

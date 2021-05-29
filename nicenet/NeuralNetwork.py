@@ -8,7 +8,7 @@ import json
 import time
 from .LossFunctions import LossFunctions
 import typing
-from .Types import T_Feature_Array, T_Target_Array, T_Data_Sample, T_Dataset
+from .Types import T_Feature_Array, T_Target_Array, T_Output_Array, T_Data_Sample, T_Dataset
 
 np.set_printoptions(precision=20)
 
@@ -138,16 +138,16 @@ class NeuralNetwork:
 
         Parameters
         ----------
-        input_array : np.array()
+        input_array : T_Feature_Array
             Input to be fed to the network.
             It is columnar vector of size Inputs x 1
 
         Returns
         -------
-        all_outputs : np.array()
+        all_outputs : T_Output_Array
             An array of all the outputs produced by each layer.
         """
-        all_outputs = list()
+        all_outputs: typing.List[T_Output_Array] = list()
         _i = 1
         for layer in self.Network:
             # print("Feeding ", input_array.T, "to , layer", i)

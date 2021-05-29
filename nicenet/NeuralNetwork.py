@@ -10,6 +10,7 @@ from .LossFunctions import LossFunctions
 import typing
 from .Types import T_Feature_Array, T_Target_Array, T_Output_Array, T_Data_Sample, T_Dataset
 from tqdm import tqdm
+from . import Utils
 
 np.set_printoptions(precision=20)
 
@@ -255,6 +256,7 @@ class NeuralNetwork:
         self.all_errors = list()
         self.epochs = epochs
 
+        # Show progress bar if epoch_logging is False
         range_object = range(epochs)
         if not epoch_logging:
             range_object = tqdm(range(epochs), desc="Training...")
@@ -266,23 +268,8 @@ class NeuralNetwork:
                 start = time.time()
             elif epoch == 1:
                 end = time.time()
-                seconds = (end - start) * epochs
-
-                minutes = seconds // 60
-                seconds = seconds % 60
-
-                hours = minutes // 60
-                minutes = minutes % 60
-                print(
-                    "Estimated Training Time: ",
-                    hours,
-                    "hrs ",
-                    minutes,
-                    "min ",
-                    seconds,
-                    "sec",
-                    sep="",
-                )
+                estimated_time = Utils.get_time_required(start, end, epochs)
+                print(estimated_time)
 
             correct = 0
             for i in range(size):

@@ -14,13 +14,16 @@ network.compile(activation_function="softmax")
 network.setLearningRate(0.1)
 
 datasetHandler = Dataset(inputs, outputs)
-datasetHandler.makeDataset('./datasets/Iris/inputs.csv', './datasets/Iris/targets.csv')
+datasetHandler.makeDataset(
+    './datasets/Iris/inputs.csv', './datasets/Iris/targets.csv')
 data, size = datasetHandler.getRawData()
+# data = datasetHandler.scaleData(data, size)
 data = shuffleArray(data)
 training, testing = splitArr(data, 3/4)
 # print(len(training))
 
-network.Train(training, len(training), epochs=50, logging=False)
+network.Train(training, len(training), epochs=50,
+              logging=False, epoch_logging=False)
 network.evaluate()
 network.epoch_vs_error()
 
@@ -28,7 +31,7 @@ network.export_model('iris_model.json')
 
 correct = 0
 total = 0
-for sample in testing :
+for sample in testing:
     features = sample[0]
     prediction = network.predict(features)
     actual = sample[1]

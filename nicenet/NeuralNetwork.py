@@ -9,6 +9,7 @@ import time
 from .LossFunctions import LossFunctions
 import typing
 from .Types import T_Feature_Array, T_Target_Array, T_Output_Array, T_Data_Sample, T_Dataset
+from tqdm import tqdm
 
 np.set_printoptions(precision=20)
 
@@ -254,7 +255,11 @@ class NeuralNetwork:
         self.all_errors = list()
         self.epochs = epochs
 
-        for epoch in range(epochs):
+        range_object = range(epochs)
+        if not epoch_logging:
+            range_object = tqdm(range(epochs), desc="Training...")
+
+        for epoch in range_object:
             self.loss = 0
             # One Epoch
             if epoch == 0:

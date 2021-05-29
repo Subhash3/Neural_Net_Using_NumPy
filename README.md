@@ -136,6 +136,8 @@ network = NeuralNetwork.load_model(filename)
         - [x] Min Max scaler
         - [ ] Data Standardization
     - [x] Change the datasample type to a tuple instead of a list.
+    - [x] Show Progress bar if epoch_logging is False
+    - [ ] Separate out outputlayer from other layers. => Create a separate class for output layer which inherits Layer.
     - [ ] Linear and Relu activation functions
     - [ ] Ability to perform regression
     - [ ] Convolution Nets

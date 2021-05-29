@@ -1,15 +1,15 @@
 import numpy as np
 from typing import List
+from .Types import T_Features, T_Targets, T_DataSample, T_Dataset
 
 
 # Dataset class
 class Dataset():
-    def __init__(self, I, O, scale=False):
+    def __init__(self, I, O):
         self.I = I
         self.O = O
         self.size = 0
-        self.dataset = list()
-        self.scale = scale
+        self.dataset: T_Dataset = list()
 
     def makeDataset(self, inputFile, targetFile):
         input_handler = self.openFile(inputFile)
@@ -25,13 +25,9 @@ class Dataset():
             input_array = list(map(float, inp.split(',')))
             target_array = list(map(float, tar.split(',')))
 
-            sample = list()
-            if self.scale:
-                input_array = self.scaleData(input_array, self.I)
-                target_array = self.scaleData(target_array, self.O)
-
-            sample.append(np.reshape(input_array, (self.I, 1)))
-            sample.append(np.reshape(target_array, (self.O, 1)))
+            features: T_Features = np.reshape(input_array, (self.I, 1))
+            targets: T_Targets = np.reshape(target_array, (self.O, 1))
+            sample: T_DataSample = (features, targets)
             self.dataset.append(sample)
             self.size += 1
 
@@ -111,7 +107,7 @@ class Dataset():
 
         return min_max_of_features, min_max_of_targets
 
-    def scaleData(self, array: List[List[np.array]], size, scale_range=(0, 1)):
+    def scaleData(self, array: T_Dataset, size, scale_range=(0, 1)):
         if size == 0:
             return
 

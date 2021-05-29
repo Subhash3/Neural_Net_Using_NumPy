@@ -8,6 +8,7 @@ import json
 import time
 from .LossFunctions import LossFunctions
 import typing
+from .Types import T_Feature_Array, T_Target_Array, T_Data_Sample, T_Dataset
 
 np.set_printoptions(precision=20)
 
@@ -131,7 +132,7 @@ class NeuralNetwork:
         #     print(np.mean(layer.biases), np.std(layer.biases))
         #     print()
 
-    def feedforward(self, input_array):
+    def feedforward(self, input_array: T_Feature_Array):
         """
         Feeds the given input throughout the network
 
@@ -158,7 +159,7 @@ class NeuralNetwork:
             # i += 1
         return all_outputs
 
-    def backpropagate(self, target):
+    def backpropagate(self, target: T_Target_Array):
         """
         Backpropagate the error throughout the network
         This function is called inside the model only.
@@ -192,7 +193,7 @@ class NeuralNetwork:
                 )
         return output_errors, is_correct_output
 
-    def update_weights(self, input_array):
+    def update_weights(self, input_array: T_Feature_Array):
         """
         Update the weights of the network.
         This function is called inside the model only.
@@ -217,13 +218,13 @@ class NeuralNetwork:
                 inputs = self.Network[i - 1].output_array
                 layer.update_weights(inputs, self.learningRate)
 
-    def Train(self, Dataset, size, epochs=5000, logging=False, epoch_logging=True):
+    def Train(self, Dataset: T_Dataset, size, epochs=5000, logging=False, epoch_logging=True):
         """
         Trains the neural network using the given dataset.
 
         Parameters
         ----------
-        Dataset : List[List[np.ndarray]]
+        Dataset : T_Dataset
 
         size : int
             Size of the dataset
@@ -253,9 +254,6 @@ class NeuralNetwork:
         self.all_errors = list()
         self.epochs = epochs
 
-        epoch_log_format_string = "{:>10}" * 3
-        print(epoch_log_format_string.format(
-            "Epoch", f"({self.cost}) Error", "(%) Accuracy"))
         for epoch in range(epochs):
             self.loss = 0
             # One Epoch
@@ -314,14 +312,13 @@ class NeuralNetwork:
             self.accuracy = (correct*100)/size
 
             if epoch_logging:
-                # print(epoch_log_format_string.format(epoch+1, self.loss, self.accuracy))
                 print(
                     f"Epoch: {epoch + 1} ==> ({self.cost}) Error: {self.loss}, (%) Accuracy: {self.accuracy}")
 
             if logging:
                 print()
 
-    def predict(self, input_array):
+    def predict(self, input_array: T_Feature_Array):
         """
         Predicts the output using a given input.
 

@@ -1,6 +1,6 @@
 import numpy as np
 from typing import List
-from .Types import T_Features, T_Targets, T_DataSample, T_Dataset
+from .Types import T_Feature_Array, T_Target_Array, T_Data_Sample, T_Dataset
 
 
 # Dataset class
@@ -25,9 +25,9 @@ class Dataset():
             input_array = list(map(float, inp.split(',')))
             target_array = list(map(float, tar.split(',')))
 
-            features: T_Features = np.reshape(input_array, (self.I, 1))
-            targets: T_Targets = np.reshape(target_array, (self.O, 1))
-            sample: T_DataSample = (features, targets)
+            features: T_Feature_Array = np.reshape(input_array, (self.I, 1))
+            targets: T_Target_Array = np.reshape(target_array, (self.O, 1))
+            sample: T_Data_Sample = (features, targets)
             self.dataset.append(sample)
             self.size += 1
 

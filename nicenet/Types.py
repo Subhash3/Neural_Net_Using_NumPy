@@ -1,8 +1,8 @@
 import typing
 import numpy as np
 
-T_Features = np.ndarray
-T_Targets = np.ndarray
+T_Feature_Array = np.ndarray
+T_Target_Array = np.ndarray
 
-T_DataSample = typing.Tuple[T_Features, T_Targets]
-T_Dataset = typing.List[T_DataSample]
+T_Data_Sample = typing.Tuple[T_Feature_Array, T_Target_Array]
+T_Dataset = typing.List[T_Data_Sample]

@@ -130,15 +130,21 @@ network = NeuralNetwork.load_model(filename)
 ### Todo
     - [x] Generalize the gradient descent algorithm
         - [x] Generalise the loss function => Write a separate class for it!
-        - [x] Implement Cross Entropy Loss
-    - [ ] Implement Batch Training
+    - [x] Implement Cross Entropy Loss
     - [ ] Data scaling
         - [x] Min Max scaler
         - [ ] Data Standardization
     - [x] Change the datasample type to a tuple instead of a list.
     - [x] Show Progress bar if epoch_logging is False
-    - [ ] Separate out outputlayer from other layers. => Create a separate class for output layer which inherits Layer.
+
+    - [ ] Use a function as a parameter to Train method to compare predictions and actual targets.
+    - [ ] Add doc strings to all functions.
+    - [ ] Implement Batch Training
+    - [ ] Write a separate class for Scalers as the scaling methods increase.
     - [ ] Linear and Relu activation functions
     - [ ] Ability to perform regression
+    - [ ] Separate out outputlayer from other layers. => Create a separate class for output layer which inherits Layer.
+
+
     - [ ] Convolution Nets
     - [ ] Recurrent Nets

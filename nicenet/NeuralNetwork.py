@@ -52,6 +52,7 @@ class NeuralNetwork:
         self.learningRate = 0.01
         self.isLoadedModel = False
         self.model_compiled = False
+        self.prediction_evaulator = Utils.judge_prediction
 
     def setLearningRate(self, lr):
         """
@@ -184,8 +185,11 @@ class NeuralNetwork:
                 # print("Output layer: ", layer.output_array, "Target: ", target)
                 output_errors = self.loss_computer.get_loss(
                     layer.output_array, target)
-                is_correct_output: bool = np.argmax(
-                    layer.output_array) == np.argmax(target)
+
+                # Evaluate this prediction to compute accuracy
+                is_correct_output: bool = self.prediction_evaulator(
+                    layer.output_array, target)
+
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
             else:

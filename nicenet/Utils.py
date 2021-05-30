@@ -1,6 +1,7 @@
 import random
 from math import floor
 import numpy as np
+from .Types import T_Output_Array
 
 
 def shuffleArray(array: list):
@@ -37,3 +38,8 @@ def get_time_required(start, end, epochs):
     hours = minutes // 60
     minutes = minutes % 60
     return f"Estimated Training Time: {hours}hrs::{minutes}min::{round(seconds, 4)}sec"
+
+
+def judge_prediction(prediction: T_Output_Array, target: T_Output_Array) -> bool:
+    is_correct_output: bool = np.argmax(prediction) == np.argmax(target)
+    return is_correct_output

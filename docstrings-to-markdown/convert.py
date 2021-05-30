@@ -6,34 +6,6 @@ import sys
 import os
 
 
-def get_all_docstrings(pycode):
-    indices = [m.start() for m in re.finditer('"""', pycode)]
-
-    doc_strings = list()
-    for i in range(0, len(indices), 2):
-        x = indices[i]
-        y = indices[i+1]
-
-        doc_strings.append(pycode[x+3:y])
-
-    return doc_strings
-
-
-def style_doc_strings(doc_strings: typing.List[str]):
-    for ds in doc_strings:
-        print(ds)
-        data = re.split(r"\n\s*Parameters\n\s*-*\n", ds)
-        desc = data[0]
-        print(desc.strip())
-        remaining = data[1]
-        data = re.split(r"\n\s*Returns\n\s*-*\n", remaining)
-        params_string = data[0]
-        remaining = data[1]
-        print(params_string)
-        print(remaining)
-        break
-
-
 def generate_markdown_api(pycode, md_filename):
     def_with_docs_regex = r'((def|class).*((\s*->\s*.*)|):\n\s*"""(\n\s*.*?)*""")'
     definitions = re.findall(def_with_docs_regex, pycode, re.MULTILINE)

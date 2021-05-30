@@ -20,6 +20,7 @@ tqdm = "*"
 setuptools = "*"
 twine = "*"
 autopep8 = "*"
+pdoc3 = "*"
 
 [requires]
 python_version = "3.6"

@@ -6,12 +6,38 @@ from .Types import T_Feature_Array, T_Target_Array, T_Data_Sample, T_Dataset
 # Dataset class
 class Dataset():
     def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
         self.I = I
         self.O = O
         self.size = 0
         self.dataset: T_Dataset = list()
 
     def makeDataset(self, inputFile, targetFile):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            inputFile: str
+                csv file containing the features/inputs.
+            targetFile: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+
         input_handler = self.openFile(inputFile)
         target_handler = self.openFile(targetFile)
 
@@ -39,9 +65,23 @@ class Dataset():
         self.size += 1
 
     def getRawData(self):
+        """
+            Returns the dataset which was made earlier in makeDataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
         return self.dataset, self.size
 
     def display(self):
+        """
+            Prints the dataset
+        """
         for i in range(self.size):
             sample = self.dataset[i]
             print("Data Sample:", i+1)
@@ -50,6 +90,19 @@ class Dataset():
 
     @staticmethod
     def openFile(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
         try:
             fhand = open(filename)
         except Exception as e:
@@ -57,7 +110,7 @@ class Dataset():
             return None
         return fhand
 
-    def get_min_max_values(self, array: List[List[np.array]]):
+    def get_min_max_values(self, array: T_Dataset):
         """
             Computes the min and max of each feature, and each target label of the entire dataset.
 
@@ -107,7 +160,24 @@ class Dataset():
 
         return min_max_of_features, min_max_of_targets
 
-    def scaleData(self, array: T_Dataset, size, scale_range=(0, 1)):
+    def scaleData(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+
         if size == 0:
             return
 

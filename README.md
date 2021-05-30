@@ -137,8 +137,8 @@ network = NeuralNetwork.load_model(filename)
     - [x] Change the datasample type to a tuple instead of a list.
     - [x] Show Progress bar if epoch_logging is False
 
-    - [ ] Use a function as a parameter to Train method to compare predictions and actual targets.
-    - [ ] Add doc strings to all functions.
+    - [x] Use a function as a parameter to Train method to compare predictions and actual targets.
+    - [x] Add doc strings to all functions.
     - [ ] Implement Batch Training
     - [ ] Write a separate class for Scalers as the scaling methods increase.
     - [ ] Linear and Relu activation functions

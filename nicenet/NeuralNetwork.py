@@ -224,7 +224,7 @@ class NeuralNetwork:
                 inputs = self.Network[i - 1].output_array
                 layer.update_weights(inputs, self.learningRate)
 
-    def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True):
+    def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True, prediction_evaulator=None):
         """
         Trains the neural network using the given dataset.
 
@@ -251,6 +251,9 @@ class NeuralNetwork:
         -------
         Doesn't return anything.
         """
+
+        if prediction_evaulator is not None:
+            self.prediction_evaulator = prediction_evaulator
 
         if not self.model_compiled:
             print("[-] Network is not complete.!")

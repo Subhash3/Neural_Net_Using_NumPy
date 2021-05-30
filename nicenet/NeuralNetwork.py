@@ -247,6 +247,11 @@ class NeuralNetwork:
             An optional parameter.
             If it is true, Error in each epoch will be logged to STDOUT.
 
+        [prediction_evaulator]: (prediction: T_Output_Array, target: T_Output_Array) -> bool
+            An optional parameter.
+            Used to evaluate the fed forward output with the actual target.
+            Default value is 'Utils.judge_prediction' function.
+
         Returns
         -------
         Doesn't return anything.

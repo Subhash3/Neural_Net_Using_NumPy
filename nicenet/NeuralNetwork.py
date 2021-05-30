@@ -224,13 +224,13 @@ class NeuralNetwork:
                 inputs = self.Network[i - 1].output_array
                 layer.update_weights(inputs, self.learningRate)
 
-    def Train(self, Dataset: T_Dataset, size, epochs=5000, logging=False, epoch_logging=True):
+    def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True):
         """
         Trains the neural network using the given dataset.
 
         Parameters
         ----------
-        Dataset : T_Dataset
+        dataset : T_Dataset
 
         size : int
             Size of the dataset
@@ -277,7 +277,7 @@ class NeuralNetwork:
 
             correct = 0
             for i in range(size):
-                data_sample = Dataset[i]
+                data_sample = dataset[i]
                 # input_array = data_sample[0]
                 # target_array = data_sample[1]
                 input_array = data_sample[0]

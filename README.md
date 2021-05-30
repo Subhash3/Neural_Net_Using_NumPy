@@ -139,6 +139,7 @@ network = NeuralNetwork.load_model(filename)
 
     - [x] Use a function as a parameter to Train method to compare predictions and actual targets.
     - [x] Add doc strings to all functions.
+    - [ ] Create API section in README to provide documentation for all prototypes.
     - [ ] Implement Batch Training
     - [ ] Write a separate class for Scalers as the scaling methods increase.
     - [ ] Linear and Relu activation functions

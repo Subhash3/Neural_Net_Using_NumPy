@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [scripts]
-clean = "rm -rf nicenet.egg-info/ build/ dist/"
+clean = "rm -rvf nicenet.egg-info/ build/ dist/"
 reqs = "jq -r '.default | to_entries[] | .key + .value.version' Pipfile.lock > requirements.txt"
 build = "python3 setup.py sdist bdist_wheel"
 test-deploy = "python3 -m twine upload -r testpypi dist/* --verbose"

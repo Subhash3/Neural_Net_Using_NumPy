@@ -1,6 +1,7 @@
 import numpy as np
 from .ActivationFunction import ActivationFunction
 from .LossFunctions import LossFunctions
+from .Types import T_Feature_Array, T_Output_Array
 
 # Layer class
 
@@ -36,7 +37,19 @@ class Layer:
         self.loss_function = loss_function
         self.loss_computer = LossFunctions(self.loss_function)
 
-    def feed(self, input_array):
+    def feed(self, input_array: T_Feature_Array) -> T_Output_Array:
+        """
+            Feeds the given input array to a particular layer.
+
+            Parameters
+            ----------
+            input_array: T_Feature_Array
+                Input array to be fed to the layer
+
+            Returns
+            -------
+            output_array: T_Output_Array
+        """
         # print("Weights", self.weights.shape)
         # print("Inputs ", input_array.shape)
         self.input_array = input_array
@@ -49,9 +62,43 @@ class Layer:
         return output_array
 
     def activate(self, x):
+        """
+            Passes the output array to an activation function.
+
+            Parameters
+            ----------
+            x
+                Output array from a layer
+
+            Returns
+            -------
+            Activated output
+        """
         return self.activator.activate(x)
 
     def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=None):
+        """
+            Calculates the gradients for each weight and bias
+
+            Parameters
+            ----------
+            target_or_weights
+                This is either targers array of weights matrix.
+                Specifically, it'll be the targets array while computing the gradients for the output layer
+                and weights matrix of the next layer.
+
+            layer_type
+                This will either be "hidden" or "output"
+
+            [next_layer_deltas]
+                This is (not exactly) an optional parameter.
+                This will be passed only while computing the gradients of a hidden layer.
+
+            Returns
+            -------
+                Doesn't return anything. But stores the gradients as a class attribute.
+        """
+
         activation_gradient = self.activator.activate(
             self.output_array, derivative=True)
         if layer_type == "output":
@@ -71,11 +118,31 @@ class Layer:
             # deltas += (next_layers weights * next_layers deltas)
 
     def update_weights(self, inputs, learningRate):
+        """
+            Tweak the weights of the layer.
+
+            Parameters
+            ----------
+            inputs: T_Feature_Array
+                Input to this network
+
+            learningRate: float
+                Learning rate of the entire network.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+
         change_in_weights = np.dot(self.deltas, inputs.T) * learningRate
         self.weights = np.subtract(self.weights, change_in_weights)
         self.biases = np.subtract(self.biases, self.deltas * learningRate)
 
     def display(self):
+        """
+            Display the metadata of the layer.
+        """
+
         print("\tInputs: ", self.inputs)
         print("\tWeights: ", self.weights)
         print("\tBiases: ", self.biases.T)

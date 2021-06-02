@@ -1,43 +1,44 @@
-from typing import Dict
 import random
 from math import floor
+from typing import Dict
+
 import numpy as np
 
 
-def customArgmax(data: Dict[str, float]):
-    maxKey = None
-    maxValue = None
+def custom_argmax(data: Dict[str, float]):
+    max_key = None
+    max_value = None
 
     for key in data:
-        if maxKey == None:
-            maxKey = key
-        if maxValue == None or maxValue < data[key]:
-            maxValue = data[key]
-            maxKey = key
+        if not max_key:
+            max_key = key
+        if not max_value or max_value < data[key]:
+            max_value = data[key]
+            max_key = key
 
-    return maxKey
+    return max_key
 
 
-def shuffleArray(array: list):
+def shuffle_array(array: list):
     arrayCopy = array.copy()
     random.shuffle(arrayCopy)
 
     return arrayCopy
 
 
-def splitArr(array: list, ratio: float):
+def split_arr(array: list, ratio: float):
     n = len(array)
 
     m = floor(n * ratio)
 
-    firstPart: list = array[0: m]
-    secondPart: list = array[m: n]
+    firstPart: list = array[0:m]
+    secondPart: list = array[m:n]
 
     return [firstPart, secondPart]
 
 
-def one_hot_encode(num, size) :
-    vector = np.array([0]*size)
-    vector[num-1] = 1
+def one_hot_encode(num, size):
+    vector = np.array([0] * size)
+    vector[num - 1] = 1
 
     return vector.T

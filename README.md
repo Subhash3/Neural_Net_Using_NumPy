@@ -140,9 +140,9 @@ network = NeuralNetwork.load_model(filename)
 
     - [ ] API docs
         - [x] Add doc strings to all functions.
+        - [x] Make the class/function declarations' docs collapsable.
         - [ ] Merge API md files and embed them in Readme.
         - [ ] Create a section, API, in README to provide documentation for all prototypes.
-        - [ ] Make the class/function declarations' docs collapsable.
 
     - [ ] Implement Batch Training
     - [ ] Write a separate class for Scalers as the scaling methods increase.

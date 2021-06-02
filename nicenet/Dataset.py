@@ -1,45 +1,45 @@
 import numpy as np
-from typing import List
-from .Types import T_Feature_Array, T_Target_Array, T_Data_Sample, T_Dataset
+
+from .Types import T_Data_Sample, T_Dataset, T_Feature_Array, T_Target_Array
 
 
 # Dataset class
-class Dataset():
-    def __init__(self, I, O):
+class Dataset:
+    def __init__(self, n_input, n_output):
         """
-            Dataset Constructor
+        Dataset Constructor
 
-            Parameters
-            ----------
-            I: int
-                No of inputs
-            O: int
-                No of outputs
+        Parameters
+        ----------
+        n_input: int
+            No of inputs
+        n_output: int
+            No of outputs
 
         """
-        self.I = I
-        self.O = O
+        self.n_input = n_input
+        self.n_output = n_output
         self.size = 0
         self.dataset: T_Dataset = list()
 
-    def makeDataset(self, inputFile, targetFile):
+    def makeDataset(self, input_file, target_file):
         """
-            Creates a dataset
+        Creates a dataset
 
-            Parameters
-            ----------
-            inputFile: str
-                csv file containing the features/inputs.
-            targetFile: str
-                csv file containing the targets.
+        Parameters
+        ----------
+        input_file: str
+            csv file containing the features/inputs.
+        target_file: str
+            csv file containing the targets.
 
-            Returns
-            -------
-            Doesn't return anything.
+        Returns
+        -------
+        Doesn't return anything.
         """
 
-        input_handler = self.openFile(inputFile)
-        target_handler = self.openFile(targetFile)
+        input_handler = self.openFile(input_file)
+        target_handler = self.openFile(target_file)
 
         if not input_handler or not target_handler:
             print("Unable to create Dataset")
@@ -48,60 +48,60 @@ class Dataset():
         target_lines = target_handler.readlines()
 
         for inp, tar in zip(input_lines, target_lines):
-            input_array = list(map(float, inp.split(',')))
-            target_array = list(map(float, tar.split(',')))
+            input_array = list(map(float, inp.split(",")))
+            target_array = list(map(float, tar.split(",")))
 
-            features: T_Feature_Array = np.reshape(input_array, (self.I, 1))
-            targets: T_Target_Array = np.reshape(target_array, (self.O, 1))
+            features: T_Feature_Array = np.reshape(input_array, (self.n_input, 1))
+            targets: T_Target_Array = np.reshape(target_array, (self.n_output, 1))
             sample: T_Data_Sample = (features, targets)
             self.dataset.append(sample)
             self.size += 1
 
     def modifyLists(self, input_array, target_array):
         sample = list()
-        sample.append(np.reshape(input_array, (self.I, 1)))
-        sample.append(np.reshape(target_array, (self.O, 1)))
+        sample.append(np.reshape(input_array, (self.n_input, 1)))
+        sample.append(np.reshape(target_array, (self.n_output, 1)))
         self.dataset.append(sample)
         self.size += 1
 
     def getRawData(self):
         """
-            Returns the dataset which was made earlier in makeDataset method
+        Returns the dataset which was made earlier in makeDataset method
 
-            Parameters
-            ----------
-            Doesn't accept anything
+        Parameters
+        ----------
+        Doesn't accept anything
 
-            Returns
-            Tuple[T_Dataset, int]
-                Dataset and its size
+        Returns
+        Tuple[T_Dataset, int]
+            Dataset and its size
         """
         return self.dataset, self.size
 
     def display(self):
         """
-            Prints the dataset
+        Prints the dataset
         """
         for i in range(self.size):
             sample = self.dataset[i]
-            print("Data Sample:", i+1)
+            print("Data Sample:", i + 1)
             print("\tInput: ", sample[0])
             print("\tTarget: ", sample[1])
 
     @staticmethod
     def openFile(filename):
         """
-            Just a helper function to open a given file and handle errors if any.
+        Just a helper function to open a given file and handle errors if any.
 
-            Parameters
-            ----------
-            filename: str
-                Filename to be opened
+        Parameters
+        ----------
+        filename: str
+            Filename to be opened
 
-            Returns
-            -------
-            fhand
-                A filehandler corresponding to the given file.
+        Returns
+        -------
+        fhand
+            A filehandler corresponding to the given file.
         """
         try:
             fhand = open(filename)
@@ -112,24 +112,24 @@ class Dataset():
 
     def get_min_max_values(self, array: T_Dataset):
         """
-            Computes the min and max of each feature, and each target label of the entire dataset.
+        Computes the min and max of each feature, and each target label of the entire dataset.
 
-            Parameters
-            ----------
-            array : List[List[np.array]]
-                List of datasamples
-                datasample = [
-                    column vector of features,
-                    column vector of of targets
-                ]
+        Parameters
+        ----------
+        array : List[List[np.array]]
+            List of datasamples
+            datasample = [
+                column vector of features,
+                column vector of of targets
+            ]
 
-            Returns
-            -------
-            Tuple[List[float]]
-                min and max values of features and targets
-                (min_max_of_features, min_max_of_targets)
-                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
-                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        Returns
+        -------
+        Tuple[List[float]]
+            min and max values of features and targets
+            (min_max_of_features, min_max_of_targets)
+            min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+            min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
         """
 
         no_of_features = array[0][0].shape[0]
@@ -142,8 +142,7 @@ class Dataset():
             # print(ith_feature_values)
             min_of_ith_feature = min(ith_feature_values)
             max_of_ith_feature = max(ith_feature_values)
-            min_max_of_features.append(
-                [min_of_ith_feature, max_of_ith_feature])
+            min_max_of_features.append([min_of_ith_feature, max_of_ith_feature])
 
         # print(min_max_of_features)
 
@@ -162,20 +161,20 @@ class Dataset():
 
     def scaleData(self, array: T_Dataset, size):
         """
-            Scales the data using min-max scaling method.
+        Scales the data using min-max scaling method.
 
-            parameters
-            ----------
-            array: T_Dataset
-                Dataset to be scaled.
+        parameters
+        ----------
+        array: T_Dataset
+            Dataset to be scaled.
 
-            size: int
-                Size of the given dataset.
+        size: int
+            Size of the given dataset.
 
-            Returns
-            -------
-            array: T_Dataset
-                Scaled dataset.
+        Returns
+        -------
+        array: T_Dataset
+            Scaled dataset.
         """
 
         if size == 0:
@@ -186,8 +185,7 @@ class Dataset():
         no_of_features = array[0][0].shape[0]
         no_of_targets = array[0][1].shape[0]
 
-        min_max_of_features, min_max_of_targets = self.get_min_max_values(
-            array)
+        min_max_of_features, min_max_of_targets = self.get_min_max_values(array)
 
         for i in range(size):
             sample = array[i]
@@ -197,13 +195,15 @@ class Dataset():
             for j in range(no_of_features):
                 min_of_jth_feature = min_max_of_features[j][0]
                 max_of_jth_feature = min_max_of_features[j][1]
-                features[j][0] = (features[j][0] - min_of_jth_feature) / \
-                    (max_of_jth_feature - min_of_jth_feature)
+                features[j][0] = (features[j][0] - min_of_jth_feature) / (
+                    max_of_jth_feature - min_of_jth_feature
+                )
 
             for j in range(no_of_targets):
                 min_of_jth_target = min_max_of_targets[j][0]
                 max_of_jth_target = min_max_of_targets[j][1]
-                targets[j][0] = (targets[j][0] - min_of_jth_target) / \
-                    (max_of_jth_target - min_of_jth_target)
+                targets[j][0] = (targets[j][0] - min_of_jth_target) / (
+                    max_of_jth_target - min_of_jth_target
+                )
 
         return array

@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
-from src.Model import NeuralNetwork
 import numpy as np
+from src.Model import NeuralNetwork
 
 model_file = "./xor-model.json"
 network = NeuralNetwork.load_model(model_file)

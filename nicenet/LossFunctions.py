@@ -6,9 +6,9 @@ class LossFunctions:
         self.loss_function = loss_function
         self.function = self._mse
 
-        if loss_function == 'mse':
+        if loss_function == "mse":
             self.function = self._mse
-        elif loss_function == 'ce':
+        elif loss_function == "ce":
             self.function = self._cross_entropy
 
     def get_loss(self, outputs, targets):
@@ -31,13 +31,13 @@ class LossFunctions:
         # print("hihi")
         error = np.subtract(targets, outputs)
         if derivative:
-            return -1*error
-        return np.mean(error*error)
+            return -1 * error
+        return np.mean(error * error)
 
     def _cross_entropy(self, outputs, targets, derivative=False):
         error = np.subtract(targets, outputs)
         if derivative:
-            return -1*error
+            return -1 * error
         # print("cross_entropy:", targets*np.log(outputs))
         # print("cross_entropy:", np.sum(targets*np.log(outputs)))
-        return -1*np.sum(targets*np.log(outputs))
+        return -1 * np.sum(targets * np.log(outputs))

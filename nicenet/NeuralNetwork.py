@@ -1,32 +1,33 @@
 #!/usr/bin/python3
 
-import numpy as np
-from matplotlib import pyplot as plt
-from .Layer import Layer
-from .Dataset import Dataset
 import json
 import time
-from .LossFunctions import LossFunctions
 import typing
-from .Types import T_Feature_Array, T_Target_Array, T_Output_Array, T_Data_Sample, T_Dataset
+
+import numpy as np
+from matplotlib import pyplot as plt
 from tqdm import tqdm
+
 from . import Utils
+from .Layer import Layer
+from .LossFunctions import LossFunctions
+from .Types import T_Dataset, T_Feature_Array, T_Output_Array, T_Target_Array
 
 np.set_printoptions(precision=20)
 
 
 class NeuralNetwork:
     # Main NeuralNetwork class
-    def __init__(self, I, O, cost="mse"):
+    def __init__(self, n_input, n_output, cost="mse"):
         """
         Creates a Feed Forward Neural Network.
 
         Parameters
         ----------
-        I : int
+        n_input: int
             Number of inputs to the network
 
-        O : int
+        n_output : int
             Number of outputs from the network
 
         [cost]: string
@@ -44,17 +45,17 @@ class NeuralNetwork:
 
         # print("Construct")
         self.Network: typing.List[Layer] = list()
-        self.I = I
-        self.O = O
+        self.n_input = n_input
+        self.n_output = n_output
         self.cost = cost
         self.loss_computer = LossFunctions(cost)
         self.total_layers = 0
-        self.learningRate = 0.01
-        self.isLoadedModel = False
+        self.learning_rate = 0.01
+        self.is_loaded_model = False
         self.model_compiled = False
         self.prediction_evaulator = Utils.judge_prediction
 
-    def setLearningRate(self, lr):
+    def set_learning_rate(self, lr):
         """
         Modifies the learning rate of the network.
 
@@ -67,9 +68,9 @@ class NeuralNetwork:
         -------
         Doesn't return anything
         """
-        self.learningRate = lr
+        self.learning_rate = lr
 
-    def addLayer(self, num_nodes, activation_function="sigmoid"):
+    def add_layer(self, num_nodes, activation_function="sigmoid"):
         """
         Adds a layer to the network.
 
@@ -98,7 +99,7 @@ class NeuralNetwork:
         # No. of row = no. of nodes
         # No. of columns = No. of weights = No. of inputs + 1 (bias)
         if self.total_layers == 0:
-            inputs = self.I
+            inputs = self.n_input
         else:
             last_layer = self.Network[-1]
             inputs = last_layer.num_nodes
@@ -125,17 +126,17 @@ class NeuralNetwork:
             print("[!!] Model is already compiled!")
             print("[!!] You cannot add layers anymore")
             return
-        self.isLoadedModel = False
+        self.is_loaded_model = False
         self.model_compiled = True
         # Adding output layer
-        self.addLayer(self.O, activation_function=activation_function)
+        self.add_layer(self.n_output, activation_function=activation_function)
 
         # for layer in self.Network :
         #     print(np.mean(layer.weights), np.std(layer.weights))
         #     print(np.mean(layer.biases), np.std(layer.biases))
         #     print()
 
-    def feedforward(self, input_array: T_Feature_Array):
+    def forward(self, input_array: T_Feature_Array):
         """
         Feeds the given input throughout the network
 
@@ -151,7 +152,7 @@ class NeuralNetwork:
             An array of all the outputs produced by each layer.
         """
         all_outputs: typing.List[T_Output_Array] = list()
-        _i = 1
+
         for layer in self.Network:
             # print("Feeding ", input_array.T, "to , layer", i)
             outputs = layer.feed(input_array)
@@ -183,12 +184,12 @@ class NeuralNetwork:
             layer = self.Network[i]
             if i == self.total_layers - 1:
                 # print("Output layer: ", layer.output_array, "Target: ", target)
-                output_errors = self.loss_computer.get_loss(
-                    layer.output_array, target)
+                output_errors = self.loss_computer.get_loss(layer.output_array, target)
 
                 # Evaluate this prediction to compute accuracy
                 is_correct_output: bool = self.prediction_evaulator(
-                    layer.output_array, target)
+                    layer.output_array, target
+                )
 
                 # print("Error: ", output_errors)
                 layer.calculate_gradients(target, "output")
@@ -218,13 +219,21 @@ class NeuralNetwork:
             layer = self.Network[i]
             if i == 0:
                 # if it is the first layer => inputs = input_array
-                layer.update_weights(input_array, self.learningRate)
+                layer.update_weights(input_array, self.learning_rate)
             else:
                 # not the first most => inputs = previous layer's output
                 inputs = self.Network[i - 1].output_array
-                layer.update_weights(inputs, self.learningRate)
+                layer.update_weights(inputs, self.learning_rate)
 
-    def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True, prediction_evaulator=None):
+    def fit(
+        self,
+        dataset: T_Dataset,
+        size,
+        epochs=100,
+        logging=False,
+        epoch_logging=True,
+        prediction_evaulator=None,
+    ):
         """
         Trains the neural network using the given dataset.
 
@@ -291,9 +300,8 @@ class NeuralNetwork:
                 input_array = data_sample[0]
                 target_array = data_sample[1]
 
-                all_outputs = self.feedforward(input_array)
-                output_error, is_correct_output = self.backpropagate(
-                    target_array)
+                all_outputs = self.forward(input_array)
+                output_error, is_correct_output = self.backpropagate(target_array)
                 self.update_weights(input_array)
 
                 if is_correct_output:
@@ -313,11 +321,12 @@ class NeuralNetwork:
 
             self.loss /= size
             self.all_errors.append(self.loss)
-            self.accuracy = (correct*100)/size
+            self.accuracy = (correct * 100) / size
 
             if epoch_logging:
                 print(
-                    f"Epoch: {epoch + 1} ==> ({self.cost}) Error: {self.loss}, (%) Accuracy: {self.accuracy}")
+                    f"Epoch: {epoch + 1} ==> ({self.cost}) Error: {self.loss}, (%) Accuracy: {self.accuracy}"
+                )
 
             if logging:
                 print()
@@ -337,7 +346,7 @@ class NeuralNetwork:
         prediction : np.array()
             Predicted value produced by the network.
         """
-        return self.feedforward(input_array)[-1]
+        return self.forward(input_array)[-1]
 
     def epoch_vs_error(self):
         """
@@ -351,7 +360,7 @@ class NeuralNetwork:
         -------
         Doesn't return anything
         """
-        if self.isLoadedModel:
+        if self.is_loaded_model:
             print("[!!] You cannot look at epoch vs error graph in a loaded model")
             print("[!!] You can only look at that while training.!")
             print("[!!] Make some modifications to the network to own the model")
@@ -422,9 +431,9 @@ class NeuralNetwork:
             return
 
         model_info = dict()
-        model_info["inputs"] = self.I
-        model_info["outputs"] = self.O
-        model_info["learning_rate"] = self.learningRate
+        model_info["inputs"] = self.n_input
+        model_info["outputs"] = self.n_output
+        model_info["learning_rate"] = self.learning_rate
         model_info["model_compiled"] = self.model_compiled
         model_info["layers"] = list()
         for layer in self.Network:
@@ -475,7 +484,7 @@ class NeuralNetwork:
 
         brain = NeuralNetwork(inputs, outputs)
         brain.total_layers = 0
-        brain.isLoadedModel = True
+        brain.is_loaded_model = True
 
         for layer_object in model_info["layers"]:
             num_nodes = layer_object["neurons"]
@@ -486,7 +495,11 @@ class NeuralNetwork:
             loss_function = layer_object["loss_function"]
 
             layer = Layer(
-                num_nodes, inputs, activation_function=activation_fn, loss_function=loss_function)
+                num_nodes,
+                inputs,
+                activation_function=activation_fn,
+                loss_function=loss_function,
+            )
             layer.weights = np.array(weights)
             layer.biases = np.array(biases)
             brain.Network.append(layer)
@@ -495,7 +508,7 @@ class NeuralNetwork:
         brain.accuracy = model_info["accuracy"]
         brain.loss = model_info["loss"]
         brain.epochs = model_info["epochs"]
-        brain.learningRate = model_info["learning_rate"]
+        brain.learning_rate = model_info["learning_rate"]
         brain.model_compiled = model_info["model_compiled"]
         print("[*] (", filename, ") Model Loaded successfully", sep="")
 

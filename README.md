@@ -136,10 +136,14 @@ network = NeuralNetwork.load_model(filename)
         - [ ] Data Standardization
     - [x] Change the datasample type to a tuple instead of a list.
     - [x] Show Progress bar if epoch_logging is False
-
     - [x] Use a function as a parameter to Train method to compare predictions and actual targets.
-    - [x] Add doc strings to all functions.
-    - [ ] Create API section in README to provide documentation for all prototypes.
+
+    - [ ] API docs
+        - [x] Add doc strings to all functions.
+        - [ ] Merge API md files and embed them in Readme.
+        - [ ] Create a section, API, in README to provide documentation for all prototypes.
+        - [ ] Make the class/function declarations' docs collapsable.
+
     - [ ] Implement Batch Training
     - [ ] Write a separate class for Scalers as the scaling methods increase.
     - [ ] Linear and Relu activation functions

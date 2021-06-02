@@ -57,14 +57,14 @@ class Dataset():
             self.dataset.append(sample)
             self.size += 1
 
-    def modifyLists(self, input_array, target_array):
+    def modify_lists(self, input_array, target_array):
         sample = list()
         sample.append(np.reshape(input_array, (self.I, 1)))
         sample.append(np.reshape(target_array, (self.O, 1)))
         self.dataset.append(sample)
         self.size += 1
 
-    def getRawData(self):
+    def get_raw_data(self):
         """
             Returns the dataset which was made earlier in makeDataset method
 
@@ -89,9 +89,9 @@ class Dataset():
             print("\tTarget: ", sample[1])
 
     @staticmethod
-    def openFile(filename):
+    def open_file(filename):
         """
-            Just a helper function to open a given file and handle errors if any.
+            _just a helper function to open a given file and handle errors if any.
 
             Parameters
             ----------
@@ -160,7 +160,7 @@ class Dataset():
 
         return min_max_of_features, min_max_of_targets
 
-    def scaleData(self, array: T_Dataset, size):
+    def scale_data(self, array: T_Dataset, size):
         """
             Scales the data using min-max scaling method.
 

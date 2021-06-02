@@ -117,7 +117,7 @@ class Layer:
             self.deltas = hidden_errors * activation_gradient
             # deltas += (next_layers weights * next_layers deltas)
 
-    def update_weights(self, inputs, learningRate):
+    def update_weights(self, inputs, learning_rate):
         """
             Tweak the weights of the layer.
 

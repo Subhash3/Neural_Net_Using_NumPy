@@ -22,12 +22,12 @@ size = 4
 
 network = NeuralNetwork(2, 1, cost="ce")
 network.setLearningRate(0.1)
-network.addLayer(8, activation_function="tanh")
-network.addLayer(8, activation_function="tanh")
-network.addLayer(8, activation_function="tanh")
-network.addLayer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
 network.compile(activation_function="sigmoid")
-network.Train(XOR_data, size, epochs=5, logging=False)
+network.train(XOR_data, size, epochs=5, logging=False)
 # network.epoch_vs_error()
 network.evaluate()
 

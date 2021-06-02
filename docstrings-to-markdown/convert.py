@@ -76,7 +76,7 @@ def generate_markdown_api(pycode, md_filename):
     return md_defs, markdown
 
 
-def Main():
+def main():
     argv = sys.argv
     argc = len(argv)
     if argc != 3:
@@ -115,4 +115,4 @@ def Main():
 
 
 if __name__ == "__main__":
-    Main()
+    main()

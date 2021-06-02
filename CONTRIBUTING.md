@@ -5,7 +5,7 @@ Use [this mail](mailto:subhashsarangi123@gmail.com) to contact me regarding any 
 
 ### Setup project workflow
 - Make sure you have python>=3.6 and pipenv installed on your machine.
-- Create/Activate a virtual environment and install all the dependencies by running 
+- Create/Activate a virtual environment and install all the dependencies by running
 
 ```bash
     $ pipenv shell

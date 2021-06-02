@@ -37,7 +37,15 @@ import regex as my_regex
 def parse_docstring(docstring):
     parts = re.findall(my_regex.IDENTIFY_EACH_PART_REGEX,
                        docstring, re.MULTILINE)
-    print(parts)
+    groups = parts[0]
+    description = groups[0].strip()
+    parameters = groups[2].strip()
+    returns = groups[5].strip()
+    print(description)
+    print(parameters)
+    print(returns)
+    # print(len(parts), len(groups))
+    print('-'*30)
 
 
 def generate_markdown_api(pycode, md_filename):
@@ -49,9 +57,6 @@ def generate_markdown_api(pycode, md_filename):
         def_with_docstring_group = definition[0]
         just_def = def_with_docstring_group.split('\n')[0]
         just_docstring = '\n'.join(def_with_docstring_group.split('\n')[1:])
-
-        parse_docstring(just_docstring)
-        quit()
 
         summary = f"<summary><code>{just_def}</code></summary>"
         p_tag = f"<p>\n\n```python\n{def_with_docstring_group}\n```\n</p>"

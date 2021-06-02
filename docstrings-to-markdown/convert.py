@@ -4,6 +4,7 @@ import re
 import typing
 import sys
 import os
+import regex as my_regex
 
 # <details open>
 # <summary><code>def __init__(self, num_nodes, inputs, activation_function, loss_function)</code></summary>
@@ -33,22 +34,33 @@ import os
 # </details>
 
 
+def parse_docstring(docstring):
+    parts = re.findall(my_regex.IDENTIFY_EACH_PART_REGEX,
+                       docstring, re.MULTILINE)
+    print(parts)
+
+
 def generate_markdown_api(pycode, md_filename):
-    def_with_docs_regex = r'((def|class).*((\s*->\s*.*)|):\n\s*"""(\n\s*.*?)*""")'
-    definitions = re.findall(def_with_docs_regex, pycode, re.MULTILINE)
+    definitions = re.findall(
+        my_regex.DEF_WITH_DOCS_REGEX, pycode, re.MULTILINE)
 
     md_defs = list()
     for definition in definitions:
         def_with_docstring_group = definition[0]
         just_def = def_with_docstring_group.split('\n')[0]
+        just_docstring = '\n'.join(def_with_docstring_group.split('\n')[1:])
+
+        parse_docstring(just_docstring)
+        quit()
+
         summary = f"<summary><code>{just_def}</code></summary>"
         p_tag = f"<p>\n\n```python\n{def_with_docstring_group}\n```\n</p>"
         details = f"<details>{summary}\n{p_tag}\n</details>"
+
         md = details
         # md = f"```python\n{def_with_docstring_group}\n```\n"
+
         md_defs.append(md)
-        # print(md)
-        # break
 
     markdown = '\n\n'.join(md_defs)
     markdown.strip()

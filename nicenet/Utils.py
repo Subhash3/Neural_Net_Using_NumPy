@@ -4,14 +4,14 @@ import numpy as np
 from .Types import T_Output_Array
 
 
-def shuffleArray(array: list):
+def shuffle_array(array: list):
     arrayCopy = array.copy()
     random.shuffle(arrayCopy)
 
     return arrayCopy
 
 
-def splitArr(array: list, ratio: float):
+def split_arr(array: list, ratio: float):
     n = len(array)
 
     m = floor(n * ratio)

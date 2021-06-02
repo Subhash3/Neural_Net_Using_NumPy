@@ -144,6 +144,7 @@ network = NeuralNetwork.load_model(filename)
         - [ ] ActivationFunction.py
         - [ ] Utils.py
         - [ ] LossFunctions.py
+        - [ ] Functions to automate the process.
 
     - [ ] API docs
         - [x] Add doc strings to all functions.

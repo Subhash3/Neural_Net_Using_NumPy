@@ -1,30 +1,32 @@
 import random
 from math import floor
+
 import numpy as np
+
 from .Types import T_Output_Array
 
 
-def shuffleArray(array: list):
+def shuffle_array(array: list):
     arrayCopy = array.copy()
     random.shuffle(arrayCopy)
 
     return arrayCopy
 
 
-def splitArr(array: list, ratio: float):
+def split_arr(array: list, ratio: float):
     n = len(array)
 
     m = floor(n * ratio)
 
-    firstPart: list = array[0: m]
-    secondPart: list = array[m: n]
+    firstPart: list = array[0:m]
+    secondPart: list = array[m:n]
 
     return [firstPart, secondPart]
 
 
 def one_hot_encode(num, size):
-    vector = np.array([0]*size)
-    vector[num-1] = 1
+    vector = np.array([0] * size)
+    vector[num - 1] = 1
 
     return vector.reshape(size, 1)
 

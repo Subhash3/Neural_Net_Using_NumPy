@@ -1,20 +1,21 @@
-import numpy as np
-from typing import TypeVar, Generic
+from typing import Generic, TypeVar
 
-T = TypeVar('T')
+import numpy as np
+
+T = TypeVar("T")
 
 # Class for activation functions
 
 
 class ActivationFunction(Generic[T]):
     def __init__(self, function_name):
-        if function_name == 'sigmoid':
+        if function_name == "sigmoid":
             self.activation_function = self._sigmoid
-        elif function_name == 'tanh':
+        elif function_name == "tanh":
             self.activation_function = self._tanh
-        elif function_name == 'relu':
+        elif function_name == "relu":
             self.activation_function = self._relu
-        elif function_name == 'softmax':
+        elif function_name == "softmax":
             self.activation_function = self._softmax
         elif function_name == "identity":
             self.activation_function = self._identity
@@ -29,12 +30,12 @@ class ActivationFunction(Generic[T]):
             # y = self._sigmoid(x)
             y = x
             return y * (1 - y)
-        return 1/(1 + np.exp(-x))
+        return 1 / (1 + np.exp(-x))
 
     def _tanh(self, x: T, derivative=False) -> T:
-        tan = 2/(1 + np.exp(-2*x)) - 1
+        tan = 2 / (1 + np.exp(-2 * x)) - 1
         if derivative:
-            return (1-tan**2)
+            return 1 - tan ** 2
         return tan
 
     def _relu(self, x: T, derivative=False) -> T:
@@ -48,7 +49,7 @@ class ActivationFunction(Generic[T]):
         # np.exp(x)/np.sum(np.exp(x))
         exponentials = np.exp(x)
         total = np.sum(exponentials)
-        return exponentials/total
+        return exponentials / total
 
     def _identity(self, x: T, derivative=False) -> T:
         if derivative:

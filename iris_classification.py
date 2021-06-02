@@ -1,33 +1,31 @@
 #!/usr/bin/python3
 
-from nicenet import NeuralNetwork
-from nicenet import Dataset
-from helpers import shuffleArray, splitArr
 import numpy as np
+
+from helpers import shuffle_array, split_arr
+from nicenet import Dataset, NeuralNetwork
 
 inputs = 4
 outputs = 3
 network = NeuralNetwork(inputs, outputs, cost="ce")
-network.addLayer(8, activation_function="sigmoid")
-network.addLayer(8, activation_function="sigmoid")
+network.add_layer(8, activation_function="sigmoid")
+network.add_layer(8, activation_function="sigmoid")
 network.compile(activation_function="softmax")
-network.setLearningRate(0.1)
+network.set_learning_rate(0.1)
 
 datasetHandler = Dataset(inputs, outputs)
-datasetHandler.makeDataset(
-    './datasets/Iris/inputs.csv', './datasets/Iris/targets.csv')
+datasetHandler.makeDataset("./datasets/Iris/inputs.csv", "./datasets/Iris/targets.csv")
 data, size = datasetHandler.getRawData()
 # data = datasetHandler.scaleData(data, size)
-data = shuffleArray(data)
-training, testing = splitArr(data, 3/4)
+data = shuffle_array(data)
+training, testing = split_arr(data, 3 / 4)
 # print(len(training))
 
-network.Train(training, len(training), epochs=50,
-              logging=False, epoch_logging=False)
+network.fit(training, len(training), epochs=50, logging=False, epoch_logging=False)
 network.evaluate()
 network.epoch_vs_error()
 
-network.export_model('iris_model.json')
+network.export_model("iris_model.json")
 
 correct = 0
 total = 0
@@ -41,7 +39,7 @@ for sample in testing:
     if p == a:
         correct += 1
     total += 1
-print("Testing accuracy:", correct*100/total)
+print("Testing accuracy:", correct * 100 / total)
 
 # newNetwork = NeuralNetwork.load_model('iris_model.json')
 # correct = 0

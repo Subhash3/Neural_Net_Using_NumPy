@@ -1,3 +1,6 @@
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
 ```python
 def __init__(self, I, O):
         """
@@ -12,7 +15,11 @@ def __init__(self, I, O):
 
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def makeDataset(self, inputFile, targetFile):</code></summary>
+<p>
 
 ```python
 def makeDataset(self, inputFile, targetFile):
@@ -31,7 +38,11 @@ def makeDataset(self, inputFile, targetFile):
             Doesn't return anything.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def getRawData(self):</code></summary>
+<p>
 
 ```python
 def getRawData(self):
@@ -47,7 +58,11 @@ def getRawData(self):
                 Dataset and its size
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def display(self):</code></summary>
+<p>
 
 ```python
 def display(self):
@@ -55,7 +70,11 @@ def display(self):
             Prints the dataset
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def openFile(filename):</code></summary>
+<p>
 
 ```python
 def openFile(filename):
@@ -73,7 +92,11 @@ def openFile(filename):
                 A filehandler corresponding to the given file.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
 
 ```python
 def get_min_max_values(self, array: T_Dataset):
@@ -98,7 +121,11 @@ def get_min_max_values(self, array: T_Dataset):
                 min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def scaleData(self, array: T_Dataset, size):</code></summary>
+<p>
 
 ```python
 def scaleData(self, array: T_Dataset, size):
@@ -119,3 +146,5 @@ def scaleData(self, array: T_Dataset, size):
                 Scaled dataset.
         """
 ```
+</p>
+</details>

@@ -1,3 +1,6 @@
+<details><summary><code>def __init__(self, num_nodes, inputs, activation_function, loss_function):</code></summary>
+<p>
+
 ```python
 def __init__(self, num_nodes, inputs, activation_function, loss_function):
         """
@@ -18,7 +21,11 @@ def __init__(self, num_nodes, inputs, activation_function, loss_function):
             None
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def feed(self, input_array: T_Feature_Array) -> T_Output_Array:</code></summary>
+<p>
 
 ```python
 def feed(self, input_array: T_Feature_Array) -> T_Output_Array:
@@ -35,7 +42,11 @@ def feed(self, input_array: T_Feature_Array) -> T_Output_Array:
             output_array: T_Output_Array
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def activate(self, x):</code></summary>
+<p>
 
 ```python
 def activate(self, x):
@@ -52,7 +63,11 @@ def activate(self, x):
             Activated output
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=None):</code></summary>
+<p>
 
 ```python
 def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=None):
@@ -78,7 +93,11 @@ def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=N
                 Doesn't return anything. But stores the gradients as a class attribute.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def update_weights(self, inputs, learningRate):</code></summary>
+<p>
 
 ```python
 def update_weights(self, inputs, learningRate):
@@ -98,7 +117,11 @@ def update_weights(self, inputs, learningRate):
             Doesn't return anything.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def display(self):</code></summary>
+<p>
 
 ```python
 def display(self):
@@ -106,3 +129,5 @@ def display(self):
             Display the metadata of the layer.
         """
 ```
+</p>
+</details>

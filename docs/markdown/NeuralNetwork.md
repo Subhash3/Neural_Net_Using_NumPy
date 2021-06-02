@@ -1,3 +1,6 @@
+<details><summary><code>def __init__(self, I, O, cost="mse"):</code></summary>
+<p>
+
 ```python
 def __init__(self, I, O, cost="mse"):
         """
@@ -24,7 +27,11 @@ def __init__(self, I, O, cost="mse"):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def setLearningRate(self, lr):</code></summary>
+<p>
 
 ```python
 def setLearningRate(self, lr):
@@ -41,7 +48,11 @@ def setLearningRate(self, lr):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def addLayer(self, num_nodes, activation_function="sigmoid"):</code></summary>
+<p>
 
 ```python
 def addLayer(self, num_nodes, activation_function="sigmoid"):
@@ -70,7 +81,11 @@ def addLayer(self, num_nodes, activation_function="sigmoid"):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def compile(self, activation_function="sigmoid"):</code></summary>
+<p>
 
 ```python
 def compile(self, activation_function="sigmoid"):
@@ -89,7 +104,11 @@ def compile(self, activation_function="sigmoid"):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def feedforward(self, input_array: T_Feature_Array):</code></summary>
+<p>
 
 ```python
 def feedforward(self, input_array: T_Feature_Array):
@@ -108,7 +127,11 @@ def feedforward(self, input_array: T_Feature_Array):
             An array of all the outputs produced by each layer.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def backpropagate(self, target: T_Target_Array):</code></summary>
+<p>
 
 ```python
 def backpropagate(self, target: T_Target_Array):
@@ -129,7 +152,11 @@ def backpropagate(self, target: T_Target_Array):
             Returns the error using the specified loss function.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def update_weights(self, input_array: T_Feature_Array):</code></summary>
+<p>
 
 ```python
 def update_weights(self, input_array: T_Feature_Array):
@@ -148,7 +175,11 @@ def update_weights(self, input_array: T_Feature_Array):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True, prediction_evaulator=None):</code></summary>
+<p>
 
 ```python
 def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True, prediction_evaulator=None):
@@ -184,7 +215,11 @@ def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_loggi
         Doesn't return anything.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def predict(self, input_array: T_Feature_Array):</code></summary>
+<p>
 
 ```python
 def predict(self, input_array: T_Feature_Array):
@@ -203,7 +238,11 @@ def predict(self, input_array: T_Feature_Array):
             Predicted value produced by the network.
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def epoch_vs_error(self):</code></summary>
+<p>
 
 ```python
 def epoch_vs_error(self):
@@ -219,7 +258,11 @@ def epoch_vs_error(self):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def evaluate(self):</code></summary>
+<p>
 
 ```python
 def evaluate(self):
@@ -236,7 +279,11 @@ def evaluate(self):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def display(self):</code></summary>
+<p>
 
 ```python
 def display(self):
@@ -253,7 +300,11 @@ def display(self):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def export_model(self, filename):</code></summary>
+<p>
 
 ```python
 def export_model(self, filename):
@@ -270,7 +321,11 @@ def export_model(self, filename):
         Doesn't return anything
         """
 ```
+</p>
+</details>
 
+<details><summary><code>def load_model(filename):</code></summary>
+<p>
 
 ```python
 def load_model(filename):
@@ -288,3 +343,5 @@ def load_model(filename):
             NeuralNetwork object
         """
 ```
+</p>
+</details>

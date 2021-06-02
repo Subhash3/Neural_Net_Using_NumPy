@@ -2,10 +2,10 @@
 This library is a modification of my previous one. [Click Here](https://github.com/Subhash3/Neural-Networks/tree/master/Feed_Forward_Networks) to check my previous library.
 
 
-## Installation  
+## Installation
 ```bash
 $ [sudo] pip3 install nicenet
-``` 
+```
 
 ## Development Installation
 ```bash
@@ -24,7 +24,7 @@ outputs = 1
 network = NeuralNetwork(inputs, outputs, cost="mse")
 
 # Add 2 hidden layers with 16 neurons each and activation function 'tanh'
-network.addLayer(16, activation_function="tanh") 
+network.addLayer(16, activation_function="tanh")
 network.addLayer(16, activation_function="tanh")
 
 # Finish the neural network by adding the output layer with sigmoid activation function.

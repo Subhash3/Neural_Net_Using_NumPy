@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 
-import re
-import typing
-import sys
 import os
+import re
+import sys
+
 import regex as my_regex
 
 # <details open>
@@ -35,8 +35,7 @@ import regex as my_regex
 
 
 def parse_docstring(docstring):
-    parts = re.findall(my_regex.IDENTIFY_EACH_PART_REGEX,
-                       docstring, re.MULTILINE)
+    parts = re.findall(my_regex.IDENTIFY_EACH_PART_REGEX, docstring, re.MULTILINE)
     groups = parts[0]
     description = groups[0].strip()
     parameters = groups[2].strip()
@@ -45,18 +44,17 @@ def parse_docstring(docstring):
     print(parameters)
     print(returns)
     # print(len(parts), len(groups))
-    print('-'*30)
+    print("-" * 30)
 
 
 def generate_markdown_api(pycode, md_filename):
-    definitions = re.findall(
-        my_regex.DEF_WITH_DOCS_REGEX, pycode, re.MULTILINE)
+    definitions = re.findall(my_regex.DEF_WITH_DOCS_REGEX, pycode, re.MULTILINE)
 
     md_defs = list()
     for definition in definitions:
         def_with_docstring_group = definition[0]
-        just_def = def_with_docstring_group.split('\n')[0]
-        just_docstring = '\n'.join(def_with_docstring_group.split('\n')[1:])
+        just_def = def_with_docstring_group.split("\n")[0]
+        just_docstring = "\n".join(def_with_docstring_group.split("\n")[1:])
 
         summary = f"<summary><code>{just_def}</code></summary>"
         p_tag = f"<p>\n\n```python\n{def_with_docstring_group}\n```\n</p>"
@@ -67,9 +65,9 @@ def generate_markdown_api(pycode, md_filename):
 
         md_defs.append(md)
 
-    markdown = '\n\n'.join(md_defs)
+    markdown = "\n\n".join(md_defs)
     markdown.strip()
-    with open(md_filename, 'w') as fp:
+    with open(md_filename, "w") as fp:
         fp.write(markdown)
         print("Successfully written markdown into ", md_filename)
 
@@ -90,8 +88,8 @@ def Main():
 
         for filename in all_files:
             srcfile = os.path.join(srcpath, filename)
-            if srcfile.endswith('.py'):
-                filename = srcfile.split('/')[-1].split('.')[0]
+            if srcfile.endswith(".py"):
+                filename = srcfile.split("/")[-1].split(".")[0]
                 md_file = f"{filename}.md"
                 outfile_path = os.path.join(outdir_path, md_file)
                 # print(srcfile)
@@ -102,7 +100,7 @@ def Main():
                     pycode = f.read()
                     generate_markdown_api(pycode, outfile_path)
     else:
-        filename = srcpath.split('/')[-1].split('.')[0]
+        filename = srcpath.split("/")[-1].split(".")[0]
         md_file = f"{filename}.md"
         outfile_path = os.path.join(outdir_path, md_file)
         # print(srcpath)

@@ -8,4 +8,6 @@ DEF_WITH_DOCS_REGEX = r'((def|class).*((\s*->\s*.*)|):\n\s*"""(\n\s*.*?)*""")'
 # Description           1
 # Parameters            3
 # Returns               6
-IDENTIFY_EACH_PART_REGEX = r'"""\n\s*(.*\s*)*?(Parameters\s*-*\s*((.*\s*)*?))?(Returns\s*-*\s*(.*\s*)*?)?"""'
+IDENTIFY_EACH_PART_REGEX = (
+    r'"""\n\s*(.*\s*)*?(Parameters\s*-*\s*((.*\s*)*?))?(Returns\s*-*\s*(.*\s*)*?)?"""'
+)

@@ -3,11 +3,11 @@
 import re
 import sys
 import time
-import regex as my_regex
+import regex_utils
 
 
 def convert_camel_to_snake(data):
-    matches = re.finditer(my_regex.EXTRACT_CAMEL, data)
+    matches = re.finditer(regex_utils.EXTRACT_CAMEL, data)
 
     camel_to_snake_map = dict()
     for match in matches:

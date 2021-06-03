@@ -3,11 +3,11 @@
 import re
 import sys
 import os
-import regex as my_regex
+import regex_utils
 
 
 def _parse_docstring(docstring):
-    parts = re.findall(my_regex.IDENTIFY_EACH_PART_REGEX,
+    parts = re.findall(regex_utils.IDENTIFY_EACH_PART_REGEX,
                        docstring, re.MULTILINE)
     groups = parts[0]
     description = groups[0].strip()
@@ -17,7 +17,7 @@ def _parse_docstring(docstring):
 
 def generate_markdown_api(pycode, md_filename):
     definitions = re.findall(
-        my_regex.DEF_WITH_DOCS_REGEX, pycode, re.MULTILINE)
+        regex_utils.DEF_WITH_DOCS_REGEX, pycode, re.MULTILINE)
 
     md_defs = list()
     for definition in definitions:

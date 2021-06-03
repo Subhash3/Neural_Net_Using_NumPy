@@ -49,12 +49,12 @@ class NeuralNetwork:
         self.cost = cost
         self.loss_computer = LossFunctions(cost)
         self.total_layers = 0
-        self.learningRate = 0.01
-        self.isLoadedModel = False
+        self.learning_rate = 0.01
+        self.is_loaded_model = False
         self.model_compiled = False
         self.prediction_evaulator = Utils.judge_prediction
 
-    def setLearningRate(self, lr):
+    def set_learning_rate(self, lr):
         """
         Modifies the learning rate of the network.
 
@@ -67,9 +67,9 @@ class NeuralNetwork:
         -------
         Doesn't return anything
         """
-        self.learningRate = lr
+        self.learning_rate = lr
 
-    def addLayer(self, num_nodes, activation_function="sigmoid"):
+    def add_layer(self, num_nodes, activation_function="sigmoid"):
         """
         Adds a layer to the network.
 
@@ -125,10 +125,10 @@ class NeuralNetwork:
             print("[!!] Model is already compiled!")
             print("[!!] You cannot add layers anymore")
             return
-        self.isLoadedModel = False
+        self.is_loaded_model = False
         self.model_compiled = True
         # Adding output layer
-        self.addLayer(self.O, activation_function=activation_function)
+        self.add_layer(self.O, activation_function=activation_function)
 
         # for layer in self.Network :
         #     print(np.mean(layer.weights), np.std(layer.weights))
@@ -218,11 +218,11 @@ class NeuralNetwork:
             layer = self.Network[i]
             if i == 0:
                 # if it is the first layer => inputs = input_array
-                layer.update_weights(input_array, self.learningRate)
+                layer.update_weights(input_array, self.learning_rate)
             else:
                 # not the first most => inputs = previous layer's output
                 inputs = self.Network[i - 1].output_array
-                layer.update_weights(inputs, self.learningRate)
+                layer.update_weights(inputs, self.learning_rate)
 
     def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True, prediction_evaulator=None):
         """
@@ -351,7 +351,7 @@ class NeuralNetwork:
         -------
         Doesn't return anything
         """
-        if self.isLoadedModel:
+        if self.is_loaded_model:
             print("[!!] You cannot look at epoch vs error graph in a loaded model")
             print("[!!] You can only look at that while training.!")
             print("[!!] Make some modifications to the network to own the model")
@@ -424,7 +424,7 @@ class NeuralNetwork:
         model_info = dict()
         model_info["inputs"] = self.I
         model_info["outputs"] = self.O
-        model_info["learning_rate"] = self.learningRate
+        model_info["learning_rate"] = self.learning_rate
         model_info["model_compiled"] = self.model_compiled
         model_info["layers"] = list()
         for layer in self.Network:
@@ -475,7 +475,7 @@ class NeuralNetwork:
 
         brain = NeuralNetwork(inputs, outputs)
         brain.total_layers = 0
-        brain.isLoadedModel = True
+        brain.is_loaded_model = True
 
         for layer_object in model_info["layers"]:
             num_nodes = layer_object["neurons"]
@@ -495,7 +495,7 @@ class NeuralNetwork:
         brain.accuracy = model_info["accuracy"]
         brain.loss = model_info["loss"]
         brain.epochs = model_info["epochs"]
-        brain.learningRate = model_info["learning_rate"]
+        brain.learning_rate = model_info["learning_rate"]
         brain.model_compiled = model_info["model_compiled"]
         print("[*] (", filename, ") Model Loaded successfully", sep="")
 

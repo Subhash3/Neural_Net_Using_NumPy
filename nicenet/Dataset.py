@@ -22,15 +22,15 @@ class Dataset():
         self.size = 0
         self.dataset: T_Dataset = list()
 
-    def makeDataset(self, inputFile, targetFile):
+    def make_dataset(self, input_file, target_file):
         """
             Creates a dataset
 
             Parameters
             ----------
-            inputFile: str
+            input_file: str
                 csv file containing the features/inputs.
-            targetFile: str
+            target_file: str
                 csv file containing the targets.
 
             Returns
@@ -38,8 +38,8 @@ class Dataset():
             Doesn't return anything.
         """
 
-        input_handler = self.openFile(inputFile)
-        target_handler = self.openFile(targetFile)
+        input_handler = self.open_file(inputFile)
+        target_handler = self.open_file(targetFile)
 
         if not input_handler or not target_handler:
             print("Unable to create Dataset")
@@ -57,16 +57,16 @@ class Dataset():
             self.dataset.append(sample)
             self.size += 1
 
-    def modifyLists(self, input_array, target_array):
+    def modify_lists(self, input_array, target_array):
         sample = list()
         sample.append(np.reshape(input_array, (self.I, 1)))
         sample.append(np.reshape(target_array, (self.O, 1)))
         self.dataset.append(sample)
         self.size += 1
 
-    def getRawData(self):
+    def get_raw_data(self):
         """
-            Returns the dataset which was made earlier in makeDataset method
+            Returns the dataset which was made earlier in make_dataset method
 
             Parameters
             ----------
@@ -89,7 +89,7 @@ class Dataset():
             print("\tTarget: ", sample[1])
 
     @staticmethod
-    def openFile(filename):
+    def open_file(filename):
         """
             Just a helper function to open a given file and handle errors if any.
 
@@ -160,7 +160,7 @@ class Dataset():
 
         return min_max_of_features, min_max_of_targets
 
-    def scaleData(self, array: T_Dataset, size):
+    def scale_data(self, array: T_Dataset, size):
         """
             Scales the data using min-max scaling method.
 

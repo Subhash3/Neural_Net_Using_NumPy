@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: colbyfayock/thank-you-action@main
+      - uses: colbyfayock/thank-you-action@master
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           TENOR_TOKEN: ${{secrets.TENOR_TOKEN}}

@@ -36,7 +36,15 @@ def convert_camel_to_snake(data):
 
 
 def Main():
-    with open(sys.argv[1], 'r') as fp:
+    argv = sys.argv
+    argc = len(argv)
+
+    if argc != 2:
+        print(f"Usage: {argv[0]} <py-file>")
+        quit()
+
+    filename = argv[1]
+    with open(filename, 'r') as fp:
         data = fp.read()
 
         start = time.time()
@@ -45,7 +53,7 @@ def Main():
 
         print(end - start)
 
-        with open("nice.py", 'w') as fp_out:
+        with open(f"{filename}.out", 'w') as fp_out:
             fp_out.write(new_data)
 
 

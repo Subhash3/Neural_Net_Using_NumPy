@@ -23,3 +23,11 @@ Use [this mail](mailto:subhashsarangi123@gmail.com) to contact me regarding any 
 - New Features
     - To add a new feature, select a task from the [todo list](https://github.com/Subhash3/Neural_Net_Using_NumPy#todo) and make a PR with its appropriate implementation.
     - If you have an idea for a new feature which is not in the todo list, then make sure to add it the README todo list while making PR.
+- Fixing issues
+    - Select an issue from the issues tab and make a PR with its appropriate implementation.
+    - If you encounter a bug, or any other problem in the codebase, raise an issue with relevant labels.
+
+#### Keep in Mind.
+- While making a Pull Request, do not push any dependencies, builds, dists or local config file.
+- Do not modify the files which don't have anything to do with the issue/feature.
+- Use only `snake_case` convention while naming variables/functions/classes/methods...

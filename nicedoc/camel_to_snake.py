@@ -37,12 +37,16 @@ def Main():
     argv = sys.argv
     argc = len(argv)
 
-    if argc != 2:
-        print(f"Usage: {argv[0]} <py-file>")
+    if argc < 2 or argc > 3:
+        print(f"Usage: {argv[0]} <py-file> [overwrite-flag=1/0]")
         quit()
 
+    overwrite_flag = False
+    if argc > 2 and argv[2] == '1':
+        overwrite_flag = True
+
     filename = argv[1]
-    with open(filename, 'r') as fp:
+    with open(filename, 'r+') as fp:
         data = fp.read()
 
         start = time.time()
@@ -51,8 +55,13 @@ def Main():
 
         print(end - start)
 
-        with open(f"{filename}.out", 'w') as fp_out:
-            fp_out.write(new_data)
+    if overwrite_flag:
+        outfile = filename
+    else:
+        outfile = f"{filename}.out"
+    with open(outfile, 'w') as fp_out:
+        fp_out.write(new_data)
+        print(f"Successfully wrote new data into {outfile}")
 
 
 if __name__ == '__main__':

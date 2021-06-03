@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from src.Model import NeuralNetwork
+from nicenet import NeuralNetwork
 import numpy as np
 
 model_file = "./xor-model.json"

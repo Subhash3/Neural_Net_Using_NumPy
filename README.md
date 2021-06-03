@@ -137,14 +137,7 @@ network = NeuralNetwork.load_model(filename)
     - [x] Change the datasample type to a tuple instead of a list.
     - [x] Show Progress bar if epoch_logging is False
     - [x] Use a function as a parameter to Train method to compare predictions and actual targets.
-    - [ ] convert all camel-cased vars to snake-case.
-        - [ ] NeuralNetwork.py
-        - [ ] Layer.py
-        - [ ] Dataset.py
-        - [ ] ActivationFunction.py
-        - [ ] Utils.py
-        - [ ] LossFunctions.py
-        - [ ] Functions to automate the process.
+    - [x] convert all camel-cased vars to snake-case.
 
     - [ ] API docs
         - [x] Add doc strings to all functions.

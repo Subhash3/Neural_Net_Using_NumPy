@@ -4,36 +4,36 @@ from math import floor
 import numpy as np
 
 
-def customArgmax(data: Dict[str, float]):
-    maxKey = None
-    maxValue = None
+def custom_argmax(data: Dict[str, float]):
+    max_key = None
+    max_value = None
 
     for key in data:
-        if maxKey == None:
-            maxKey = key
-        if maxValue == None or maxValue < data[key]:
-            maxValue = data[key]
-            maxKey = key
+        if max_key == None:
+            max_key = key
+        if max_value == None or max_value < data[key]:
+            max_value = data[key]
+            max_key = key
 
-    return maxKey
-
-
-def shuffleArray(array: list):
-    arrayCopy = array.copy()
-    random.shuffle(arrayCopy)
-
-    return arrayCopy
+    return max_key
 
 
-def splitArr(array: list, ratio: float):
+def shuffle_array(array: list):
+    array_copy = array.copy()
+    random.shuffle(array_copy)
+
+    return array_copy
+
+
+def split_arr(array: list, ratio: float):
     n = len(array)
 
     m = floor(n * ratio)
 
-    firstPart: list = array[0: m]
-    secondPart: list = array[m: n]
+    first_part: list = array[0: m]
+    second_part: list = array[m: n]
 
-    return [firstPart, secondPart]
+    return [first_part, second_part]
 
 
 def one_hot_encode(num, size) :

@@ -16,16 +16,16 @@ size = 4
 # input_file = "./datasets/fun/input.csv"
 # target_file = "./datasets/fun/target.csv"
 
-# datasetCreator = Dataset(2, 2)
-# datasetCreator.makeDataset(input_file, target_file)
-# XOR_data, size = datasetCreator.getRawData()
+# dataset_creator = Dataset(2, 2)
+# dataset_creator.make_dataset(input_file, target_file)
+# XOR_data, size = dataset_creator.get_raw_data()
 
 network = NeuralNetwork(2, 1, cost="ce")
-network.setLearningRate(0.1)
-network.addLayer(8, activation_function="tanh")
-network.addLayer(8, activation_function="tanh")
-network.addLayer(8, activation_function="tanh")
-network.addLayer(8, activation_function="tanh")
+network.set_learning_rate(0.1)
+network.add_layer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
+network.add_layer(8, activation_function="tanh")
 network.compile(activation_function="sigmoid")
 network.Train(XOR_data, size, epochs=5, logging=False)
 # network.epoch_vs_error()

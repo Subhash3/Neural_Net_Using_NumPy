@@ -4,22 +4,22 @@ import numpy as np
 from .Types import T_Output_Array
 
 
-def shuffleArray(array: list):
-    arrayCopy = array.copy()
-    random.shuffle(arrayCopy)
+def shuffle_array(array: list):
+    array_copy = array.copy()
+    random.shuffle(array_copy)
 
-    return arrayCopy
+    return array_copy
 
 
-def splitArr(array: list, ratio: float):
+def split_arr(array: list, ratio: float):
     n = len(array)
 
     m = floor(n * ratio)
 
-    firstPart: list = array[0: m]
-    secondPart: list = array[m: n]
+    first_part: list = array[0: m]
+    second_part: list = array[m: n]
 
-    return [firstPart, secondPart]
+    return [first_part, second_part]
 
 
 def one_hot_encode(num, size):

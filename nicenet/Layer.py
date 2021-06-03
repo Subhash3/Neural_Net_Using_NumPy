@@ -117,7 +117,7 @@ class Layer:
             self.deltas = hidden_errors * activation_gradient
             # deltas += (next_layers weights * next_layers deltas)
 
-    def update_weights(self, inputs, learningRate):
+    def update_weights(self, inputs, learning_rate):
         """
             Tweak the weights of the layer.
 
@@ -126,7 +126,7 @@ class Layer:
             inputs: T_Feature_Array
                 Input to this network
 
-            learningRate: float
+            learning_rate: float
                 Learning rate of the entire network.
 
             Returns
@@ -134,9 +134,9 @@ class Layer:
             Doesn't return anything.
         """
 
-        change_in_weights = np.dot(self.deltas, inputs.T) * learningRate
+        change_in_weights = np.dot(self.deltas, inputs.T) * learning_rate
         self.weights = np.subtract(self.weights, change_in_weights)
-        self.biases = np.subtract(self.biases, self.deltas * learningRate)
+        self.biases = np.subtract(self.biases, self.deltas * learning_rate)
 
     def display(self):
         """

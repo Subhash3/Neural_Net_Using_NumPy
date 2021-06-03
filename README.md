@@ -127,6 +127,27 @@ filename = "model.json"
 network = NeuralNetwork.load_model(filename)
 ```
 
+<br/>
+<br/>
+
+## API
+#### [`NeuralNetwork`](https://github.com/Subhash3/Neural_Net_Using_NumPy/blob/master/docs/markdown/NeuralNetwork.md)
+#### [`Layer`](https://github.com/Subhash3/Neural_Net_Using_NumPy/blob/master/docs/markdown/Layer.md)
+#### [`Dataset`](https://github.com/Subhash3/Neural_Net_Using_NumPy/blob/master/docs/markdown/Dataset.md)
+#### [`ActivationFunction`](https://github.com/Subhash3/Neural_Net_Using_NumPy/blob/master/docs/markdown/ActivationFunction.md)
+    - Sigmoid
+    - Tanh
+    - Softmax
+    - Identity
+    - ReLu
+#### [`LossFunctions`](https://github.com/Subhash3/Neural_Net_Using_NumPy/blob/master/docs/markdown/LossFunctions.md)
+    - MSE (Mean Squared Error)
+    - CE (Corss Entropy)
+#### [`Utils`](https://github.com/Subhash3/Neural_Net_Using_NumPy/blob/master/docs/markdown/Utils.md)
+
+<br/>
+<br/>
+
 ### Todo
     - [x] Generalize the gradient descent algorithm
         - [x] Generalise the loss function => Write a separate class for it!

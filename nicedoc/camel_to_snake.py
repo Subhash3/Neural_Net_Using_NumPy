@@ -1,0 +1,44 @@
+#!/usr/bin/python3
+
+import re
+import sys
+import time
+
+EXTRACT_CAMEL = r"(\.|\s|^)(\b[a-z]+)(([A-Z]+[a-z]+)+?)\b"
+
+
+def convert_camel_to_snake(data):
+    matches = re.finditer(EXTRACT_CAMEL, data)
+    camel_to_snake_map = dict()
+    for match in matches:
+        # print(match.groups())
+        beggining, lowercase_stuff, pascal_stuff, _last_pascal_group = match.groups()
+        camel_case_to_replace = f"{beggining}{lowercase_stuff}{pascal_stuff}"
+
+        def callback(pattern): return f"_{pattern.group(1).lower()}"
+
+        pascal_to_snake = re.sub(r'([A-Z]+)', callback, pascal_stuff)
+        final_snake_case = f"{beggining}{lowercase_stuff}{pascal_to_snake}"
+
+        print(camel_case_to_replace, "=>", final_snake_case)
+        camel_to_snake_map[camel_case_to_replace] = final_snake_case
+
+    new_data = data
+    for camel_case in camel_to_snake_map:
+        snake_case = camel_to_snake_map[camel_case]
+        new_data = new_data.replace(camel_case, snake_case)
+
+    return new_data
+
+
+with open(sys.argv[1], 'r') as fp:
+    data = fp.read()
+
+    start = time.time()
+    new_data = convert_camel_to_snake(data)
+    end = time.time()
+
+    print(end - start)
+
+    with open("nice.py", 'w') as fp_out:
+        fp_out.write(new_data)

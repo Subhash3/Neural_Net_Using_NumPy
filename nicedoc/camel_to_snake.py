@@ -3,7 +3,7 @@
 import re
 import sys
 import time
-from . import regex as my_regex
+import regex as my_regex
 
 
 def convert_camel_to_snake(data):

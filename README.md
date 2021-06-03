@@ -24,8 +24,8 @@ outputs = 1
 network = NeuralNetwork(inputs, outputs, cost="mse")
 
 # Add 2 hidden layers with 16 neurons each and activation function 'tanh'
-network.addLayer(16, activation_function="tanh") 
-network.addLayer(16, activation_function="tanh")
+network.add_layer(16, activation_function="tanh") 
+network.add_layer(16, activation_function="tanh")
 
 # Finish the neural network by adding the output layer with sigmoid activation function.
 network.compile(activation_function="sigmoid")
@@ -44,9 +44,9 @@ input_file = "inputs.csv"
 target_file = "targets.csv"
 
 # Create a dataset object with the same inputs and outputs defined for the network.
-datasetCreator = Dataset(inputs, outputs)
-datasetCreator.makeDataset(input_file, target_file)
-data, size = datasetCreator.getRawData()
+dataset_handler = Dataset(inputs, outputs)
+dataset_handler.make_dataset(input_file, target_file)
+data, size = dataset_handler.get_raw_data()
 ```
 
 If you want to manually make a dataset, follow these rules:
@@ -80,7 +80,7 @@ For eg, a typical XOR data set looks something like :
 ### Training The network
 The library provides a *Train* function which accepts the dataset, dataset size, and two optional parameters epochs, and logging.
 ```python3
-def Train(dataset, size, epochs=5000, logging=True) :
+def Train(self, dataset: T_Dataset, size, epochs=100, logging=False, epoch_logging=True, prediction_evaulator=None):
 	....
 	....
 ```
@@ -88,7 +88,7 @@ For Eg: If you want to train your network for 1000 epochs.
 ```python3
 >>> network.Train(data, size, epochs=1000)
 ```
-Notice that I didn't change the value of log_outputs as I want the output to printed for each epoch.
+Notice that I didn't change the value of `logging` as I want the output to be printed for each epoch.
 
 
 ### Debugging
@@ -109,7 +109,7 @@ To take a look at all the layers' info
 
 Sometimes, learning rate might have to be altered for better convergence.
 ```python3
->>> network.setLearningRate(0.1)
+>>> network.set_learning_rate(0.1)
 ```
 
 ### Exporting Model

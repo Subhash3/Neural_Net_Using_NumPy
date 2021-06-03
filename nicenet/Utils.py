@@ -19,7 +19,7 @@ def split_arr(array: list, ratio: float):
     first_part: list = array[0: m]
     second_part: list = array[m: n]
 
-    return [firstPart, second_part]
+    return [first_part, second_part]
 
 
 def one_hot_encode(num, size):

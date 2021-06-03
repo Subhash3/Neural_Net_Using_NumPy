@@ -13,18 +13,15 @@ print("enter filename")
 filename = input()
 file = open(filename, 'r')
 data = file.read()
-reg = list(set(re.findall(ru.EXTRACT_CAMEL, data)))
-# print(reg)
+reg = list(set(re.findall(ru.EXTRACT_CAMEL_CASE, data)))
 for i in range(len(reg)):
     temp = reg[i][1]
     while re.search(r"[A-Z]",temp):
         temp = re.sub(r"([A-Z]+)", callback, temp)
     ans[reg[i][1]] = temp
-# print(ans)
-while re.search(ru.EXTRACT_CAMEL, data):
+while re.search(ru.EXTRACT_CAMEL_CASE, data):
     print("blah")
-    data = re.sub(ru.EXTRACT_CAMEL, callback1, data)
-# print(data)
+    data = re.sub(ru.EXTRACT_CAMEL_CASE, callback1, data)
 file.close()
 file = open(filename,'w')
 file.write(data)

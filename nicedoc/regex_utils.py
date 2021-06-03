@@ -12,3 +12,6 @@ IDENTIFY_EACH_PART_REGEX = r'"""\n\s*(.*\s*)*?(Parameters\s*-*\s*((.*\s*)*?))?(R
 
 # Given a python file, extracts all the camelcased variable/methods/functions.
 EXTRACT_CAMEL = r"(\.|\s|^)(\b[a-z]+)(([A-Z]+[a-z]+)+?)\b"
+
+# Extracting the camel case string the file
+EXTRACT_CAMEL_CASE = r"(\s|\.|\[|^)([a-z]+?([A-Z]+?[a-z,0-9]+)+)"

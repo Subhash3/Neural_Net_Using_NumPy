@@ -7,24 +7,22 @@ import regex_utils
 
 
 def convert_camel_to_snake(data):
-    matches = re.finditer(regex_utils.EXTRACT_CAMEL, data)
+    matches = re.finditer(regex_utils.EXTRACT_CAMEL, data, re.MULTILINE)
 
     camel_to_snake_map = dict()
     for match in matches:
         # print(match.groups())
-        beggining, lowercase_stuff, pascal_stuff, _last_pascal_group = match.groups()
-        camel_case_to_replace = f"{beggining}{lowercase_stuff}{pascal_stuff}"
+        beggining, camel_stuff, _, _, _ = match.groups()
 
         # Convert all the groups of uppercase letters to lowercase and prepend them with '_'.
         def callback(pattern): return f"_{pattern.group(1).lower()}"
 
-        pascal_to_snake = re.sub(r'([A-Z]+)', callback, pascal_stuff)
-        final_snake_case = f"{beggining}{lowercase_stuff}{pascal_to_snake}"
+        pascal_to_snake = re.sub(r'([A-Z]+)', callback, camel_stuff)
 
-        print(camel_case_to_replace, "=>", final_snake_case)
+        print(camel_stuff, "=>", pascal_to_snake)
 
         # store the required changes to be made in a dictionary
-        camel_to_snake_map[camel_case_to_replace] = final_snake_case
+        camel_to_snake_map[camel_stuff] = pascal_to_snake
 
     # Now replace all the camel-cases with snake-cases.
     new_data = data

@@ -20,9 +20,19 @@ class ActivationFunction(Generic[T]):
             self.activation_function = self._identity
 
     def activate(self, x: T, derivative=False) -> T:
+        # Change the datatype to float128 to avoid overflows
+        # And make sure to change it back to float64 as the dtype float128 is not JSON serializable.
+
+        x = np.array(x, dtype=np.float128)
+
         if derivative:
-            return self.activation_function(x, derivative=True)
-        return self.activation_function(x)
+            d = self.activation_function(x, derivative=True)
+            d = np.array(d, dtype=np.float64)
+            return d
+
+        a = self.activation_function(x)
+        a = np.array(a, dtype=np.float64)
+        return a
 
     def _sigmoid(self, x: T, derivative=False) -> T:
         if derivative:

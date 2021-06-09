@@ -801,11 +801,11 @@ def scale_data(self, array: T_Dataset, size):
     - [x] Use a function as a parameter to Train method to compare predictions and actual targets.
     - [x] convert all camel-cased vars to snake-case.
 
-    - [ ] API docs
+    - [x] API docs
         - [x] Add doc strings to all functions.
         - [x] Make the class/function declarations' docs collapsable.
-        - [ ] Merge API md files and embed them in Readme.
-        - [ ] Create a section, API, in README to provide documentation for all prototypes.
+        - [x] Merge API md files and embed them in Readme.
+        - [x] Create a section, API, in README to provide documentation for all prototypes.
 
     - [ ] Implement Batch Training
     - [ ] Write a separate class for Scalers as the scaling methods increase.

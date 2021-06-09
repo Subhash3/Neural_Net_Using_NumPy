@@ -30,11 +30,11 @@ def __init__(self, I, O, cost="mse"):
 </p>
 </details>
 
-<details><summary><code>def setLearningRate(self, lr):</code></summary>
+<details><summary><code>def set_learning_rate(self, lr):</code></summary>
 <p>
 
 ```python
-def setLearningRate(self, lr):
+def set_learning_rate(self, lr):
         """
         Modifies the learning rate of the network.
 
@@ -51,11 +51,11 @@ def setLearningRate(self, lr):
 </p>
 </details>
 
-<details><summary><code>def addLayer(self, num_nodes, activation_function="sigmoid"):</code></summary>
+<details><summary><code>def add_layer(self, num_nodes, activation_function="sigmoid"):</code></summary>
 <p>
 
 ```python
-def addLayer(self, num_nodes, activation_function="sigmoid"):
+def add_layer(self, num_nodes, activation_function="sigmoid"):
         """
         Adds a layer to the network.
 

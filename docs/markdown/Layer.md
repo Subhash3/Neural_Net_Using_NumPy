@@ -96,11 +96,11 @@ def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=N
 </p>
 </details>
 
-<details><summary><code>def update_weights(self, inputs, learningRate):</code></summary>
+<details><summary><code>def update_weights(self, inputs, learning_rate):</code></summary>
 <p>
 
 ```python
-def update_weights(self, inputs, learningRate):
+def update_weights(self, inputs, learning_rate):
         """
             Tweak the weights of the layer.
 
@@ -109,7 +109,7 @@ def update_weights(self, inputs, learningRate):
             inputs: T_Feature_Array
                 Input to this network
 
-            learningRate: float
+            learning_rate: float
                 Learning rate of the entire network.
 
             Returns

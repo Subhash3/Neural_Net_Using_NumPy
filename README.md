@@ -164,11 +164,11 @@ def __init__(self, I, O, cost="mse"):
 </p>
 </details>
 
-<details><summary><code>def setLearningRate(self, lr):</code></summary>
+<details><summary><code>def set_learning_rate(self, lr):</code></summary>
 <p>
 
 ```python
-def setLearningRate(self, lr):
+def set_learning_rate(self, lr):
         """
         Modifies the learning rate of the network.
 
@@ -185,11 +185,11 @@ def setLearningRate(self, lr):
 </p>
 </details>
 
-<details><summary><code>def addLayer(self, num_nodes, activation_function="sigmoid"):</code></summary>
+<details><summary><code>def add_layer(self, num_nodes, activation_function="sigmoid"):</code></summary>
 <p>
 
 ```python
-def addLayer(self, num_nodes, activation_function="sigmoid"):
+def add_layer(self, num_nodes, activation_function="sigmoid"):
         """
         Adds a layer to the network.
 
@@ -581,11 +581,11 @@ def calculate_gradients(self, target_or_weights, layer_type, next_layer_deltas=N
 </p>
 </details>
 
-<details><summary><code>def update_weights(self, inputs, learningRate):</code></summary>
+<details><summary><code>def update_weights(self, inputs, learning_rate):</code></summary>
 <p>
 
 ```python
-def update_weights(self, inputs, learningRate):
+def update_weights(self, inputs, learning_rate):
         """
             Tweak the weights of the layer.
 
@@ -594,7 +594,7 @@ def update_weights(self, inputs, learningRate):
             inputs: T_Feature_Array
                 Input to this network
 
-            learningRate: float
+            learning_rate: float
                 Learning rate of the entire network.
 
             Returns
@@ -640,19 +640,19 @@ def __init__(self, I, O):
 </p>
 </details>
 
-<details><summary><code>def makeDataset(self, inputFile, targetFile):</code></summary>
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
 <p>
 
 ```python
-def makeDataset(self, inputFile, targetFile):
+def make_dataset(self, input_file, target_file):
         """
             Creates a dataset
 
             Parameters
             ----------
-            inputFile: str
+            input_file: str
                 csv file containing the features/inputs.
-            targetFile: str
+            target_file: str
                 csv file containing the targets.
 
             Returns
@@ -663,13 +663,13 @@ def makeDataset(self, inputFile, targetFile):
 </p>
 </details>
 
-<details><summary><code>def getRawData(self):</code></summary>
+<details><summary><code>def get_raw_data(self):</code></summary>
 <p>
 
 ```python
-def getRawData(self):
+def get_raw_data(self):
         """
-            Returns the dataset which was made earlier in makeDataset method
+            Returns the dataset which was made earlier in make_dataset method
 
             Parameters
             ----------
@@ -695,11 +695,11 @@ def display(self):
 </p>
 </details>
 
-<details><summary><code>def openFile(filename):</code></summary>
+<details><summary><code>def open_file(filename):</code></summary>
 <p>
 
 ```python
-def openFile(filename):
+def open_file(filename):
         """
             Just a helper function to open a given file and handle errors if any.
 
@@ -746,11 +746,2276 @@ def get_min_max_values(self, array: T_Dataset):
 </p>
 </details>
 
-<details><summary><code>def scaleData(self, array: T_Dataset, size):</code></summary>
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
 <p>
 
 ```python
-def scaleData(self, array: T_Dataset, size):
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
+        """
+            Scales the data using min-max scaling method.
+
+            parameters
+            ----------
+            array: T_Dataset
+                Dataset to be scaled.
+
+            size: int
+                Size of the given dataset.
+
+            Returns
+            -------
+            array: T_Dataset
+                Scaled dataset.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def __init__(self, I, O):</code></summary>
+<p>
+
+```python
+def __init__(self, I, O):
+        """
+            Dataset Constructor
+
+            Parameters
+            ----------
+            I: int
+                No of inputs
+            O: int
+                No of outputs
+
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def make_dataset(self, input_file, target_file):</code></summary>
+<p>
+
+```python
+def make_dataset(self, input_file, target_file):
+        """
+            Creates a dataset
+
+            Parameters
+            ----------
+            input_file: str
+                csv file containing the features/inputs.
+            target_file: str
+                csv file containing the targets.
+
+            Returns
+            -------
+            Doesn't return anything.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_raw_data(self):</code></summary>
+<p>
+
+```python
+def get_raw_data(self):
+        """
+            Returns the dataset which was made earlier in make_dataset method
+
+            Parameters
+            ----------
+            Doesn't accept anything
+
+            Returns
+            Tuple[T_Dataset, int]
+                Dataset and its size
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def display(self):</code></summary>
+<p>
+
+```python
+def display(self):
+        """
+            Prints the dataset
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def open_file(filename):</code></summary>
+<p>
+
+```python
+def open_file(filename):
+        """
+            Just a helper function to open a given file and handle errors if any.
+
+            Parameters
+            ----------
+            filename: str
+                Filename to be opened
+
+            Returns
+            -------
+            fhand
+                A filehandler corresponding to the given file.
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def get_min_max_values(self, array: T_Dataset):</code></summary>
+<p>
+
+```python
+def get_min_max_values(self, array: T_Dataset):
+        """
+            Computes the min and max of each feature, and each target label of the entire dataset.
+
+            Parameters
+            ----------
+            array : List[List[np.array]]
+                List of datasamples
+                datasample = [
+                    column vector of features,
+                    column vector of of targets
+                ]
+
+            Returns
+            -------
+            Tuple[List[float]]
+                min and max values of features and targets
+                (min_max_of_features, min_max_of_targets)
+                min_max_of_features = List[[min_of_ith_feature, max_of_ith_feature]]
+                min_max_of_targets = List[[min_of_ith_target, max_of_ith_target]]
+        """
+```
+</p>
+</details>
+
+<details><summary><code>def scale_data(self, array: T_Dataset, size):</code></summary>
+<p>
+
+```python
+def scale_data(self, array: T_Dataset, size):
         """
             Scales the data using min-max scaling method.
 
